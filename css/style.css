@@ -1,0 +1,29 @@
+.bar {
+    fill: steelblue;
+}
+
+.mid-placement {
+    display: flex;
+    justify-content: center;
+}
+
+.vis-container {
+    border: 1px solid black;
+}
+
+.centering {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.subtitle {
+    margin-top: 1rem;
+    border-top: 1px solid black;
+}
+
+.layout-plots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
