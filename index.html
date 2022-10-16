@@ -1,55 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>D3 Test</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="css/style.css">
-  <!-- D3 -->
-  <link rel="preload" src = "js/d3.v6.min.js"></script> 
-  <!-- My scripts -->
-  <link rel="preload" src="js/script.js"></script>
-  <link rel="preload" src="js/navigation.js"></script>
-</head>
+  <head>
+    <title>IV - EU Birds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<body onload="init(); initButtons()">
+    <!-- Bootstrap -->
+    <link href="library/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="library/bootstrap/js/jquery.js"></script>
+    <script src="library/bootstrap/js/bootstrap.min.js"></script>
 
-  <div class="centering">
+    <!-- Custom sylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- D3 -->
+    <script type="text/javascript" src = "js/d3.v6.min.js"></script> 
+    <!-- Plot scripts-->
+    <script type="text/javascript" src="js/script.js"></script>
+    
+  </head>
+  <body onload="init();">
+
+  <div class="jumbotron">
+    <div class="container centering">
     <h1>Information Visualization</h1>
-  </div>
-  <div class="centering">
-    <p>Matheus Emma Nico</p>
-  </div>
-  <div class="centering">
-    <button id="prev">Prev Page</button>
-    <button id="next">Next Page</button>
-  </div>
-
-  <div class="subtitle centering">
-    <h2>Oscars</h2>
-  </div>
-
-  <div>
-    <div style="width: 33%; float: left">
-      <svg style="height: 20px;"></svg>
-    </div>
     <div style="width: 33%; float: left; text-align: center;">
-      <button id="new">New</button>
-      <button id="old">Old</button>
-      <button id="all">All</button>
+        <button class="btn btn-primary btn-lg btn-block" id="new">New</button>
+        <button class="btn btn-primary btn-lg btn-block" id="old">Old</button>
+        <button class="btn btn-primary btn-lg btn-block" id="all">All</button>
     </div>
-    <div style="width: 33%; float: left">
-      <svg style="height: 20px;"></svg>
     </div>
   </div>
-  <div>
-    <div class="centering"><svg id="vi1"></svg></div>
-    <div class="centering"><svg id="vi2"></svg></div>
+
+  <div class="d-flex justify-content-around mb-4">
+    <div style="width: 50%" class="centering"><svg id="vi1"></svg></div>
+    <div style="width: 50%" class="centering"><svg id="vi2"></svg></div>
   </div>
-  <div class="centering">
+
+  <div class="d-flex justify-content-around">
     <div class="centering"><svg id="vi3"></svg></div>
-    <div style="width: 50%; float: center"><svg id="vi4"></svg></div>
   </div>
 
-</body>
 
+  </body>
 </html>
