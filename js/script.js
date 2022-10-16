@@ -2,11 +2,12 @@ const margin = { top: 20, right: 30, bottom: 40, left: 90 };
 const width = 600 - margin.left - margin.right;
 const height = 400 - margin.top - margin.bottom;
 
+const dataPath = "data/data.json"
+
 function init() {
   createBarChart("#vi1");
   createScatterPlot("#vi2");
   createLineChart("#vi3");
-  // createLineChart("#vi4");
   
   d3.select("#new").on("click", () => {
     updateBarChart(2008, 2014);
@@ -34,7 +35,7 @@ function createBarChart(id) {
     .attr("id", "gBarChart")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  d3.json("data/data.json").then(function (data) {
+  d3.json(dataPath).then(function (data) {
     console.log(data);
     const x = d3.scaleLinear().domain([0, 10]).range([0, width]);
     svg
@@ -53,15 +54,6 @@ function createBarChart(id) {
       .attr("id", "gYAxis")
       .call(d3.axisLeft(y));
 
-    var color = d3.scaleOrdinal(d3.schemeCategory10);
-
-
-    min = d3.min(data.rating)
-    max = d3.max(data.rating)
-
-    var myColor = d3.scaleSequential().domain([min,max])
-      .interpolator(d3.interpolatePuRd);
-
     svg
       .selectAll("rect.rectValue") 
       .data(data, (d) => d.title) 
@@ -71,7 +63,7 @@ function createBarChart(id) {
       .attr("y", (d) => y(d.oscar_year))
       .attr("width", (d) => x(d.rating))
       .attr("height", y.bandwidth())
-      .attr("fill", (d) => myColor(d.rating))
+      .attr("fill", (d) => "steelblue")
       .on("mouseover", (event, d) => handleMouseOver(d))
       .on("mouseleave", (event, d) => handleMouseLeave())
       .append("title")
@@ -88,7 +80,7 @@ function createScatterPlot(id) {
     .attr("id", "gScatterPlot")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  d3.json("data/data.json").then(function (data) {
+  d3.json(dataPath).then(function (data) {
     const x = d3
       .scaleLinear()
       .domain([0, d3.max(data, (d) => d.budget)])
@@ -130,7 +122,7 @@ function createLineChart(id) {
     .attr("id", "gLineChart")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  d3.json("data/data.json").then(function (data) {
+  d3.json(dataPath).then(function (data) {
     const x = d3
       .scalePoint()
       .domain(data.map((d) => d.oscar_year))
@@ -182,7 +174,7 @@ function createLineChart(id) {
 }
 
 function updateBarChart(start, finish) {
-  d3.json("data/data.json").then(function (data) {
+  d3.json(dataPath).then(function (data) {
     data = data.filter(function (elem) {
       return start <= elem.oscar_year && elem.oscar_year <= finish;
     });
@@ -237,7 +229,7 @@ function updateBarChart(start, finish) {
 }
 
 function updateScatterPlot(start, finish) {
-  d3.json("data/data.json").then(function (data) {
+  d3.json(dataPath).then(function (data) {
     data = data.filter(function (elem) {
       return start <= elem.oscar_year && elem.oscar_year <= finish;
     });
@@ -291,7 +283,7 @@ function updateScatterPlot(start, finish) {
 }
 
 function updateLineChart(start, finish) {
-  d3.json("data/data.json").then(function (data) {
+  d3.json(dataPath).then(function (data) {
     data = data.filter(function (elem) {
       return start <= elem.oscar_year && elem.oscar_year <= finish;
     });
