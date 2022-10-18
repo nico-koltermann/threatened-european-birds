@@ -14,31 +14,21 @@
     <!-- D3 -->
     <script type="text/javascript" src = "js/d3.v6.min.js"></script> 
     <!-- Plot scripts-->
+    <script type="text/javascript" src="js/scatter-plot.js"></script>
+    <script type="text/javascript" src="js/dot-matrix.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
     
   </head>
   <body onload="init();">
 
-  <div class="jumbotron">
-    <div class="container centering">
-    <h1>Information Visualization</h1>
-    <div style="width: 33%; float: left; text-align: center;">
-        <button class="btn btn-primary btn-lg btn-block" id="new">New</button>
-        <button class="btn btn-primary btn-lg btn-block" id="old">Old</button>
-        <button class="btn btn-primary btn-lg btn-block" id="all">All</button>
+    <div class="headline d-flex justify-content-around align-items-center">
+      <h1>Information Visualization</h1>
     </div>
-    </div>
-  </div>
 
   <div class="d-flex justify-content-around mb-4">
-    <div style="width: 50%" class="centering"><svg id="vi1"></svg></div>
-    <div style="width: 50%" class="centering"><svg id="vi2"></svg></div>
+    <div style="width: 50%" class="chart-container"><svg id="scatterPlot"></svg></div>
+    <div style="width: 50%" class="chart-container"><svg id="dotMatrix"></svg></div>
   </div>
-
-  <div class="d-flex justify-content-around">
-    <div class="centering"><svg id="vi3"></svg></div>
-  </div>
-
 
   </body>
 </html>
