@@ -39,7 +39,7 @@ function createScatterPlot(id, dataPath) {
           .attr("cx", (d) => x(d.distribution_surface_area))
           .attr("cy", (d) => y(d.population_maximum_size))
           .attr("r", 4)
-          .style("fill", "steelblue")
+          .style("fill", "green")
           .on("mouseover", (event, d) => handleMouseOver(d))
           .on("mouseleave", (event, d) => handleMouseLeave())
           .append("speciesname")
@@ -64,7 +64,7 @@ function updateScatterPlot(id, dataPath) {
       .select("#gXAxis")
       .call(d3.axisBottom(x).tickFormat((x) => x / 1000000 + "M"));
 
-    const y = d3.scaleLinear().domain([0, 145000000]).range([height, 0]);
+    const y = d3.scaleLinear().domain([0, 80000000]).range([height, 0]);
     svg.select("gYAxis").call(d3.axisLeft(y));
 
     svg
@@ -78,7 +78,7 @@ function updateScatterPlot(id, dataPath) {
             .attr("cx", (d) => x(d.distribution_surface_area))
             .attr("cy", (d) => y(0))
             .attr("r", 4)
-            .style("fill", "steelblue")
+            .style("fill", "green")
             .on("mouseover", (event, d) => handleMouseOver(d))
             .on("mouseleave", (event, d) => handleMouseLeave())
           circles
@@ -101,5 +101,12 @@ function updateScatterPlot(id, dataPath) {
       );
   });
 }
-
+function handleMouseOver(item) {
+  d3.selectAll(".itemValue")
+    .filter(function (d, i) {
+      return d.title == item.title;
+    })
+    .attr("r", 10)
+    .style("fill", "red");
+}
 
