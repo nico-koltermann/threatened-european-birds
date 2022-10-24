@@ -10,6 +10,7 @@ function createDotMatrix(id, dataPath) {
     .append("g")
     .attr("id", "gDotMatrix")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
 }
 
 function updateDotMatrix(id, dataPath) {
