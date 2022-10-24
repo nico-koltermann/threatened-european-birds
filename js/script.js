@@ -1,6 +1,8 @@
-const dataPath = "data/data.json"
+const dataPath = "data/birdsEUPopulation_Dataset1.csv"
 
 function init() {
-  createScatterPlot("#scatterPlot");
-  createDotMatrix("#dotMatrix");
+  d3.dsv(";", dataPath).then(function(data) {
+    createDotMatrix("#dotMatrix", data);
+    createTestChart(data);
+  });
 }

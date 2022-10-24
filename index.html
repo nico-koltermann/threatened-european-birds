@@ -1,40 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>IV - EU Birds</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap -->
-    <link href="library/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="library/bootstrap/js/jquery.js"></script>
-    <script src="library/bootstrap/js/bootstrap.min.js"></script>
+<head>
+  <title>IV - EU Birds</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Custom sylesheet -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- D3 -->
-    <script type="text/javascript" src = "js/d3.v6.min.js"></script> 
-    <!-- Plot scripts-->
-    <script type="text/javascript" src="js/scatter-plot.js"></script>
-    <script type="text/javascript" src="js/dot-matrix.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-    
-  </head>
-  <body onload="init();">
+  <!-- Bootstrap -->
+  <link href="library/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <script src="library/bootstrap/js/jquery.js"></script>
+  <script src="library/bootstrap/js/bootstrap.min.js"></script>
 
-    <div class="headline d-flex justify-content-around align-items-center">
-      <h1>Information Visualization</h1>
-    </div>
+  <!-- Custom sylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dot-matrix.css">
 
+  <!-- D3 -->
+  <script type="text/javascript" src = "js/d3.v6.min.js"></script> 
+  
+  <!-- Plot scripts-->
+  <script type="text/javascript" src="js/scatter-plot.js"></script>
+  <script type="text/javascript" src="js/dot-matrix.js"></script>
+  <script type="text/javascript" src="js/dot-matrix-old.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
+  
+</head>
+<body onload="init();">
+<div class="demo-bg"></div>
 
-    
-  <div class="d-flex justify-content-around mb-4">
-    <div style="width: 40%" class="chart-container my-5">
-      <svg id="scatterPlot"></svg>
-    </div>
-    <div style="width: 40%" class="chart-container my-5">
-      <svg id="dotMatrix"></svg>
-    </div>
+  <!-- Static Header -->
+  <div class="headline d-flex justify-content-around align-items-center">
+    <h1>Information Visualization</h1>
   </div>
 
-  </body>
+  <!-- ---------------------------------- -->
+  <!-- Content - Charts -->
+  <div class="page-content">
+
+    <div class="d-flex justify-content-around mb-4">
+      <div style="width: 50%" class="chart-container my-5">
+        <div id="testChart"></div>
+      </div>
+      <div style="width: 40%" class="chart-container my-5">
+        <!-- <svg id="scatterPlot"></svg> -->
+      </div>
+    </div>  
+    
+  <!-- ---------------------------------- -->
+  <!-- Page Content End -->
+  </div>
+
+</div>
+</body>
 </html>
