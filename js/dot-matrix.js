@@ -7,7 +7,7 @@ function createTestChart(input_data, id) {
   // set the dimensions and margins of the graph
   const margin = {top: 20, right: 20, bottom: 60, left: 150};
   const width = 630 - margin.left - margin.right;
-  const height = 1000 - margin.top - margin.bottom;
+  const height = 800 - margin.top - margin.bottom;
 
   const step = 10;
   const normalSizeMatrixDot = 4;
@@ -26,18 +26,19 @@ function createTestChart(input_data, id) {
   data_LC = [];
   data_UNK = [];
   input_data.forEach( x => { if (x.red_list_cat == 'Unknown' ||
-    (!x.red_list_cat.includes('CR')
+    (  !x.red_list_cat.includes('CR')
     && !x.red_list_cat.includes('EN')
     && !x.red_list_cat.includes('VU')
     && !x.red_list_cat.includes('NT')
     && !x.red_list_cat.includes('LC')
     )) data_UNK.push(x) });
-  input_data.forEach( x => { if (x.red_list_cat == 'CR' || x.red_list_cat == 'CR ') data_CR.push(x) });
-  input_data.forEach( x => { if (x.red_list_cat == 'EN' || x.red_list_cat == 'EN ') data_EN.push(x) });
-  input_data.forEach( x => { if (x.red_list_cat == 'VU' || x.red_list_cat == 'VU ') data_VU.push(x) });
-  input_data.forEach( x => { if (x.red_list_cat == 'NT' || x.red_list_cat == 'NT ') data_NT.push(x) });
-  input_data.forEach( x => { if (x.red_list_cat == 'LC' || x.red_list_cat == 'LC ') data_LC.push(x) });
-
+  input_data.forEach( x => { if (x.red_list_cat.includes('CR')) data_CR.push(x) });
+  input_data.forEach( x => { if (x.red_list_cat.includes('EN')) data_EN.push(x) });
+  input_data.forEach( x => { if (x.red_list_cat.includes('VU')) data_VU.push(x) });
+  input_data.forEach( x => { if (x.red_list_cat.includes('NT')) data_NT.push(x) });
+  input_data.forEach( x => { if (x.red_list_cat.includes('LC')) data_LC.push(x) });
+  
+  // Build final data, sort by population size 
   data = data_UNK
     .concat(data_CR.sort(comparePop))
     .concat(data_EN.sort(comparePop))
@@ -73,7 +74,7 @@ function createTestChart(input_data, id) {
     .call(d3.axisBottom(x));
 
   // Configure Y axis
-  var y = d3.scaleLinear().domain([0, 66]).range([height - 30, 0]);
+  var y = d3.scaleLinear().domain([0, familyNames.length]).range([height - 30, 0]);
   yScale = d3.axisLeft(y)
               .ticks(familyNames.length)
               .tickFormat(function (d) {
@@ -89,7 +90,7 @@ function createTestChart(input_data, id) {
   svg.append("text")
     .attr("text-anchor", "end")
     .attr("x", width)
-    .attr("y", height + margin.top + 20)
+    .attr("y", height)
     .text("Species");
 
   // Save values of ticks for adding points
