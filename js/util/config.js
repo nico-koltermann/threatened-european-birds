@@ -37,3 +37,6 @@ const step = 10;
 const normalSizeMatrixDot = 5;
 const zoomSizeMatrixDot = 10;
 const dotMatrixCircleSize = 4;
+
+const symbolSizeDotMatrix = 50;
+const zoomSymbolSizeDotMatrix = 250;

@@ -94,7 +94,7 @@ function createTestChart(input_data, id) {
   d3.select(".y-axis").selectAll(".tick")
     .each(function(d){
         yValues.push(d)
-    }) 
+    });
 
   svg.append('line')
     .style("stroke", "black")
@@ -160,30 +160,53 @@ function createTestChart(input_data, id) {
       });
   }
 
-  svg.append('g')
-    .selectAll("dot")
+  svg.append("g")
+      .attr("stroke-width", 1.5)
+      .attr("font-family", "sans-serif")
+      .attr("font-size", 10)
+    .selectAll("path")
     .data(finalData)
-    .enter()
+    .join("path")
+      .attr("class", "dotMatrixDot singleItem")
+      .attr("transform", d => `translate(${d.x},${y(d.y)})`)
+      // .attr("d", function (d) { return getSymbolWithSize(d, symboSizeDotMatrix); })
+      .attr( "d", d3.symbol().size(symbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
+      .style("fill",function(d) {
+        return getColor(d.red_list_cat);
+      });
+
+
+    // add legend
+    var legend = svg
+      .selectAll(".legend")
+      .data(['Breeding', 'Wintering'])
+      .enter()
+      .append("g")
+      .attr("class", "legend")
+      .attr("border", "1px solid black")
+      .attr("transform", "translate(-100," + 20 + ")");
+
+    legend
       .append("circle")
-      // .append("svg:marker") 
-      // .attr("class", function(d) {
-      //   if (d.keywintering == 'N') {
-      //     return 'circle';
-      //   } else {
-      //     return 'rect';
-      //   }
-      // })
-        .attr("class", "dotMatrixDot singleItem")
-        // .attr("d", customSqr)
-        // .attr("transform", 'translate(' + x + ',' + y + ')');
-        .attr("cx", function(d,i) {return d.x ; })
-        .attr("cy", function(d,i) { return y(d.y); })
-        .attr("r", function(d,i) {
-          return dotMatrixCircleSize; 
-        })
-        .style("fill",function(d){
-          return getColor(d.red_list_cat);
-        });
+      .attr("cx",  width-margin.right)
+      .attr("cy", 5)
+      .attr("r", 8)
+      .style("fill", "grey")
+
+    legend
+      .append('path')
+      .attr("transform", function (d,i) {
+        return 'translate(' + (width - 20) + ', ' + 25 + ')';
+      })
+      .attr("d", d3.symbol().size(100).type(d3.symbols[4]))
+      // .attr("curser", "pointer")
+      .style("fill", "grey");
+
+    legend
+      .append("text")
+      .attr("x", width-margin.right+15)
+      .attr("y", function(d,i){return i*20 + 10;})
+      .text(function(d){return d});
 
   // ---------------------------------------------
   // ---------     Interaction            --------
@@ -206,7 +229,7 @@ function createTestChart(input_data, id) {
   tooltip.append('div')
     .attr('class', 'red_list');
 
-  svg.selectAll("circle")
+  svg.selectAll(".dotMatrixDot")
     .on('mouseover', function(e, d) {
       handleSingleMouseOver(d);
       tooltip.select('.red_list').html("<b>Red List: " + d.red_list_cat + "</b>");
@@ -226,8 +249,9 @@ function createTestChart(input_data, id) {
     .on('mousemove', function(e, d) {
         handleSingleMouseOver(d);
         d3.select(this)
-          .attr("r", zoomSizeMatrixDot)
+          .attr( "d", d3.symbol().size(zoomSymbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
           .style('cursor', 'pointer');
+
         tooltip
           .style('top', (e.layerY + 10) + 'px')
           .style('left', (e.layerX - 25) + 'px');
@@ -235,9 +259,8 @@ function createTestChart(input_data, id) {
     .on('mouseout', function(e, d) {
         handleMouseLeave(d);
         d3.select(this)
-          .attr("r", function(d,i) {
-            return dotMatrixCircleSize; 
-          });
+        .attr( "d", d3.symbol().size(symbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) );
+
         tooltip.style('display', 'none');
         tooltip.style('opacity',0);
     });

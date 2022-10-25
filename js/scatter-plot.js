@@ -20,7 +20,7 @@ function createScatterPlot(id, dataPath) {
 
       const x = d3
         .scaleLog()
-        .domain([1, 4500000])
+        .domain([1, 50000000])
         .range([0,width]);
       svg
         .append("g")
@@ -30,10 +30,18 @@ function createScatterPlot(id, dataPath) {
       
       const y = d3
           .scaleLog()
-          .domain([1, 20000000])
+          .domain([1, 500000000])
           .range([height, 0])
 
       data = data.filter(function (d) { return d.distribution_surface_area > 0 });
+
+      svg.append('line')
+        .style("stroke", "black")
+        .style("stroke-width", 1)
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", width)
+        .attr("y2", 0);
 
       svg
         .append("g")

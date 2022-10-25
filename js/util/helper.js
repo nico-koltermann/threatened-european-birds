@@ -8,6 +8,14 @@ function getColor(red_list_cat) {
   }
 }
 
+function getSymbol(d) {
+  if (d.keywintering == 'N') {
+    return d3.symbols[0]; 
+  } else {
+    return d3.symbols[1];
+  }
+}
+
 function comparePop(a, b) {
   if (a.population_maximum_size >= b.population_maximum_size) {
     return -1;
