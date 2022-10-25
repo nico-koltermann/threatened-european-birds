@@ -24,6 +24,7 @@ https://observablehq.com/@d3/d3v6-migration-guide#events
 ## Examples
 
 [Graph](http://bl.ocks.org/eesur/be2abfb3155a38be4de4)
+[Dot Matrix](https://arpitnarechania.github.io/d3-dotmatrix/)
 
 [Scatterplot](http://bl.ocks.org/williaster/af5b855651ffe29bdca1)
 []()
