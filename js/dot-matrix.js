@@ -1,4 +1,4 @@
-function createTestChart(data, id) {
+function createTestChart(input_data, id) {
 
   // ---------------------------------------------
   // ---------          Config         -----------
@@ -6,7 +6,7 @@ function createTestChart(data, id) {
 
   // set the dimensions and margins of the graph
   const margin = {top: 20, right: 20, bottom: 60, left: 150};
-  const width = 600 - margin.left - margin.right;
+  const width = 630 - margin.left - margin.right;
   const height = 1000 - margin.top - margin.bottom;
 
   const step = 10;
@@ -16,6 +16,34 @@ function createTestChart(data, id) {
   // ---------------------------------------------
   // ---------        Filter Data      -----------
   // ---------------------------------------------
+
+  // Filter data for color
+  // TODO: This is a fast and dirty way, rewrite this section
+  data_CR = [];
+  data_EN = [];
+  data_VU = [];
+  data_NT = [];
+  data_LC = [];
+  data_UNK = [];
+  input_data.forEach( x => { if (x.red_list_cat == 'Unknown' ||
+    (!x.red_list_cat.includes('CR')
+    && !x.red_list_cat.includes('EN')
+    && !x.red_list_cat.includes('VU')
+    && !x.red_list_cat.includes('NT')
+    && !x.red_list_cat.includes('LC')
+    )) data_UNK.push(x) });
+  input_data.forEach( x => { if (x.red_list_cat == 'CR' || x.red_list_cat == 'CR ') data_CR.push(x) });
+  input_data.forEach( x => { if (x.red_list_cat == 'EN' || x.red_list_cat == 'EN ') data_EN.push(x) });
+  input_data.forEach( x => { if (x.red_list_cat == 'VU' || x.red_list_cat == 'VU ') data_VU.push(x) });
+  input_data.forEach( x => { if (x.red_list_cat == 'NT' || x.red_list_cat == 'NT ') data_NT.push(x) });
+  input_data.forEach( x => { if (x.red_list_cat == 'LC' || x.red_list_cat == 'LC ') data_LC.push(x) });
+
+  data = data_UNK
+    .concat(data_CR.sort(comparePop))
+    .concat(data_EN.sort(comparePop))
+    .concat(data_VU.sort(comparePop))
+    .concat(data_NT.sort(comparePop))
+    .concat(data_LC.sort(comparePop));
 
   familyNames = [];
   data.forEach(species => {
@@ -41,11 +69,11 @@ function createTestChart(data, id) {
   var x = d3.scaleLinear().domain([]).range([0, width]);
   svg
     .append("g")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + height + 30 + ")")
     .call(d3.axisBottom(x));
 
   // Configure Y axis
-  var y = d3.scaleLinear().domain([0, 66]).range([height -10, 0]);
+  var y = d3.scaleLinear().domain([0, 66]).range([height - 30, 0]);
   yScale = d3.axisLeft(y)
               .ticks(familyNames.length)
               .tickFormat(function (d) {
@@ -70,41 +98,81 @@ function createTestChart(data, id) {
     .each(function(d){
         yValues.push(d)
     }) 
+
+  svg.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x1", width)
+    .attr("y1", height - 20)
+    .attr("x2", width)
+    .attr("y2", 0); 
+
+  svg.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x1", 0)
+    .attr("y1", height - 20)
+    .attr("x2", width)
+    .attr("y2", height - 20); 
+
+  svg.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x1", 0)
+    .attr("y1", height - 20)
+    .attr("x2", width)
+    .attr("y2", height - 20); 
+
+  svg.append('line')
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x1", 0)
+    .attr("y1", 0)
+    .attr("x2", width)
+    .attr("y2", 0); 
       
   // ---------------------------------------------
   // ---------       Chart Data           --------
   // ---------------------------------------------
 
   // Remember x values
+
   let counter = new Array(familyNames.length).fill(10);
 
+  var maxValue = d3.max(data, function(d){
+    return +d.population_maximum_size; //<-- convert to number
+  });
+
   let i;
-  let arr = [];
+  let finalData = [];
   for(var j = 0; j < data.length; j++) {
     i = familyNames.indexOf(data[j].taxFamily_en);    
-    xVal = counter[i];
-    counter[i] = counter[i] + step; 
-    arr.push({
-      y: yValues[i], 
-      x: parseFloat(xVal), 
-      red_list_cat: data[j].red_list_cat,
-      speciesname: data[j].speciesname,
-      taxFamily_en: data[j].taxFamily_en,
-      speciescode: data[j].speciescode,
-      distribution_surface_area: data[j].distribution_surface_area,
-      population_maximum_size: data[j].population_maximum_size
-    });
+      xVal = counter[i];
+      counter[i] = counter[i] + step; 
+      finalData.push({
+        y: yValues[i], 
+        x: parseFloat(xVal),
+        multiplier: parseFloat(data[j].population_maximum_size) / maxValue,
+        red_list_cat: data[j].red_list_cat,
+        speciesname: data[j].speciesname,
+        taxFamily_en: data[j].taxFamily_en,
+        speciescode: data[j].speciescode,
+        distribution_surface_area: data[j].distribution_surface_area,
+        population_maximum_size: data[j].population_maximum_size
+      });
   }
 
- // Add dots
+  // Add dots
   svg.append('g')
   .selectAll("dot")
-  .data(arr)
+  .data(finalData)
   .enter()
   .append("circle")
     .attr("cx", function(d,i) {return d.x ; })
     .attr("cy", function(d,i) { return y(d.y); })
-    .attr("r", normalSizeMatrixDot)
+    .attr("r", function(d,i) {
+      return +(normalSizeMatrixDot * +d.multiplier + 2) ; 
+    })
     .style("fill",function(d){
       return getColor(d);
     });
@@ -126,10 +194,13 @@ function createTestChart(data, id) {
   tooltip.append('div')
     .attr('class', 'surface_area');
   tooltip.append('div')
-    .attr('class', 'copopulationunt');
+    .attr('class', 'population');
+  tooltip.append('div')
+    .attr('class', 'red_list');
 
   svg.selectAll("circle")
     .on('mouseover', function(e, d) {
+      tooltip.select('.red_list').html("<b>Red List: " + d.red_list_cat + "</b>");
       tooltip.select('.code').html("<b>Code: " + d.speciescode + "</b>");
       tooltip.select('.name').html("<b>Name: " + d.speciesname+ "</b>");
       tooltip.select('.family').html("<b>Family: " + d.taxFamily_en + "</b>");
@@ -153,7 +224,9 @@ function createTestChart(data, id) {
     })
     .on('mouseout', function() {
         d3.select(this)
-          .attr("r", normalSizeMatrixDot);
+          .attr("r", function(d,i) {
+            return +(normalSizeMatrixDot * +d.multiplier + 2) ; 
+          });
         tooltip.style('display', 'none');
         tooltip.style('opacity',0);
     });
