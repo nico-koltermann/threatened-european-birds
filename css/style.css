@@ -14,7 +14,6 @@
   src: url('../library/fonts/Flaviotte.otf') format("opentype");
 }
 
-
 .cr-color { color: var(--CR) }
 .en-color { color: var(--EN) }
 .vu-color { color: var(--VU) }
@@ -86,41 +85,10 @@ body {
 }
 
 .chart-container {
-  background-color: whitesmoke;
+  height: fit-content;
+  width: fit-content;
+  background-color: rgb(229, 245, 229);
   padding: 2rem;
   border: 1px solid black;
   box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
-}
-
-path { 
-  stroke: steelblue;
-  stroke-width: 2;
-  fill: none;
-}
- 
-.axis path,
-.axis line {
-	fill: none;
-	stroke: grey;
-	stroke-width: 1;
-	shape-rendering: crispEdges;
-}
-
-.tooltip {
-	background: #eee;
-	box-shadow: 0 0 5px #999999;
-	color: #333;
-	font-size: 12px;
-	left: 130px;
-	padding: 10px;
-	position: absolute;
-	text-align: center;
-	top: 95px;
-	z-index: 10;
-	display: block;
-	opacity: 0;
-}
-
-.title{
-font-size:16px;
 }
