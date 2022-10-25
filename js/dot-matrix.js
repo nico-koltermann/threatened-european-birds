@@ -7,7 +7,7 @@ function createTestChart(input_data, id) {
   // set the dimensions and margins of the graph
   const margin = {top: 20, right: 20, bottom: 60, left: 150};
   const width = 630 - margin.left - margin.right;
-  const height = 800 - margin.top - margin.bottom;
+  const height = 900 - margin.top - margin.bottom;
 
   const step = 10;
   const normalSizeMatrixDot = 4;
