@@ -1,5 +1,5 @@
-function getColor(item) {
-  let col = redListCatColorScale[item.red_list_cat];
+function getColor(red_list_cat) {
+  let col = redListCatColorScale[red_list_cat];
   if (col == undefined ){
     return "#808080"
   }
