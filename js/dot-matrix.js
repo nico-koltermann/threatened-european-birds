@@ -9,10 +9,6 @@ function createTestChart(input_data, id) {
   const width = 630 - margin.left - margin.right;
   const height = 900 - margin.top - margin.bottom;
 
-  const step = 10;
-  const normalSizeMatrixDot = 4;
-  const zoomSizeMatrixDot = 8;
-
   // ---------------------------------------------
   // ---------        Filter Data      -----------
   // ---------------------------------------------
@@ -158,25 +154,26 @@ function createTestChart(input_data, id) {
         speciesname: data[j].speciesname,
         taxFamily_en: data[j].taxFamily_en,
         speciescode: data[j].speciescode,
+        keywintering: data[j].keywintering,
         distribution_surface_area: data[j].distribution_surface_area,
         population_maximum_size: data[j].population_maximum_size
       });
   }
 
-  // Add dots
   svg.append('g')
-  .selectAll("dot")
-  .data(finalData)
-  .enter()
-  .append("circle")
-    .attr("cx", function(d,i) {return d.x ; })
-    .attr("cy", function(d,i) { return y(d.y); })
-    .attr("r", function(d,i) {
-      return +(normalSizeMatrixDot * +d.multiplier + 2) ; 
-    })
-    .style("fill",function(d){
-      return getColor(d);
-    });
+    .selectAll("dot")
+    .data(finalData)
+    .enter()
+      .append("circle")
+        .attr("class", "dotMatrixDot singleItem")
+        .attr("cx", function(d,i) {return d.x ; })
+        .attr("cy", function(d,i) { return y(d.y); })
+        .attr("r", function(d,i) {
+          return dotMatrixCircleSize; 
+        })
+        .style("fill",function(d){
+          return getColor(d);
+        });
 
   // ---------------------------------------------
   // ---------     Interaction            --------
@@ -201,6 +198,7 @@ function createTestChart(input_data, id) {
 
   svg.selectAll("circle")
     .on('mouseover', function(e, d) {
+      handleSingleMouseOver(d);
       tooltip.select('.red_list').html("<b>Red List: " + d.red_list_cat + "</b>");
       tooltip.select('.code').html("<b>Code: " + d.speciescode + "</b>");
       tooltip.select('.name').html("<b>Name: " + d.speciesname+ "</b>");
@@ -216,6 +214,7 @@ function createTestChart(input_data, id) {
 
     })
     .on('mousemove', function(e, d) {
+        handleSingleMouseOver(d);
         d3.select(this)
           .attr("r", zoomSizeMatrixDot)
           .style('cursor', 'pointer');
@@ -223,10 +222,11 @@ function createTestChart(input_data, id) {
           .style('top', (e.layerY + 10) + 'px')
           .style('left', (e.layerX - 25) + 'px');
     })
-    .on('mouseout', function() {
+    .on('mouseout', function(e, d) {
+        handleMouseLeave(d);
         d3.select(this)
           .attr("r", function(d,i) {
-            return +(normalSizeMatrixDot * +d.multiplier + 2) ; 
+            return dotMatrixCircleSize; 
           });
         tooltip.style('display', 'none');
         tooltip.style('opacity',0);
