@@ -23,6 +23,9 @@ let redListCatColorScale = {
 
 const pageItemClass = "itemValue"
 
+// Do the checks
+const grey = "rgb(176, 176, 176)";
+
 // ---------------------------------------------
 // ---------        Scatter Plot     -----------
 // ---------------------------------------------
@@ -33,10 +36,10 @@ const scatterCircleSize = 4;
 // ---------         Dot Matrix      -----------
 // ---------------------------------------------
 
-const step = 10;
+const step = 12;
 const normalSizeMatrixDot = 5;
 const zoomSizeMatrixDot = 10;
 const dotMatrixCircleSize = 4;
 
-const symbolSizeDotMatrix = 50;
+const symbolSizeDotMatrix = 80;
 const zoomSymbolSizeDotMatrix = 250;

@@ -5,13 +5,15 @@ function createTestChart(input_data, id) {
   // ---------------------------------------------
 
   // set the dimensions and margins of the graph
-  const margin = {top: 20, right: 20, bottom: 60, left: 150};
-  const width = 630 - margin.left - margin.right;
+  const margin = {top: 10, right: 20, bottom: 10, left: 150};
+  const width = 700 - margin.left - margin.right;
   const height = 1000 - margin.top - margin.bottom;
 
   // ---------------------------------------------
   // ---------        Filter Data      -----------
   // ---------------------------------------------
+
+  console.log(input_data);
 
   // Filter data for color
   // TODO: This is a fast and dirty way, rewrite this section
@@ -20,14 +22,6 @@ function createTestChart(input_data, id) {
   data_VU = [];
   data_NT = [];
   data_LC = [];
-  data_UNK = [];
-  input_data.forEach( x => { if (x.red_list_cat == 'Unknown' ||
-    (  !x.red_list_cat.includes('CR')
-    && !x.red_list_cat.includes('EN')
-    && !x.red_list_cat.includes('VU')
-    && !x.red_list_cat.includes('NT')
-    && !x.red_list_cat.includes('LC')
-    )) data_UNK.push(x) });
   input_data.forEach( x => { if (x.red_list_cat.includes('CR')) data_CR.push(x) });
   input_data.forEach( x => { if (x.red_list_cat.includes('EN')) data_EN.push(x) });
   input_data.forEach( x => { if (x.red_list_cat.includes('VU')) data_VU.push(x) });
@@ -35,8 +29,7 @@ function createTestChart(input_data, id) {
   input_data.forEach( x => { if (x.red_list_cat.includes('LC')) data_LC.push(x) });
   
   // Build final data, sort by population size 
-  data = data_UNK
-    .concat(data_CR.sort(comparePop))
+  data = data_CR
     .concat(data_EN.sort(comparePop))
     .concat(data_VU.sort(comparePop))
     .concat(data_NT.sort(comparePop))
@@ -176,6 +169,8 @@ function createTestChart(input_data, id) {
       });
 
 
+    const colorsWintering = ["brown", "blue"];
+
     // add legend
     var legend = svg
       .selectAll(".legend")
@@ -183,30 +178,50 @@ function createTestChart(input_data, id) {
       .enter()
       .append("g")
       .attr("class", "legend")
-      .attr("border", "1px solid black")
+      .attr("border", "2px solid black")
       .attr("transform", "translate(-100," + 20 + ")");
 
     legend
       .append("circle")
+      .attr('class', 'legendEntryBreed')
       .attr("cx",  width-margin.right)
       .attr("cy", 5)
       .attr("r", 8)
-      .style("fill", "grey")
+      .attr("curser", "pointer")
+      .style("fill", colorsWintering[0])
 
     legend
       .append('path')
+      .attr('class', 'legendEntryWinter')
       .attr("transform", function (d,i) {
         return 'translate(' + (width - 20) + ', ' + 25 + ')';
       })
       .attr("d", d3.symbol().size(100).type(d3.symbols[4]))
-      // .attr("curser", "pointer")
-      .style("fill", "grey");
+      .attr("curser", "pointer")
+      .style("fill", colorsWintering[1]);
 
     legend
       .append("text")
+      .attr('class', 'legendEntryBreed')
       .attr("x", width-margin.right+15)
-      .attr("y", function(d,i){return i*20 + 10;})
-      .text(function(d){return d});
+      .attr("y", 10)
+      .attr("fill", colorsWintering[0])
+      .text('Breeding')
+      .on('click', function(e, d) {
+        winteringFilter("Breeding");
+      });
+
+      legend
+        .append("text")
+          .attr('class', 'legendEntryWinter')
+          .attr("x", width-margin.right+15)
+          .attr("y", 30)
+          .attr("fill", colorsWintering[1])
+          .text('Wintering')
+          .on('click', function(e, d) {
+            winteringFilter("Wintering");
+          });
+
 
   // ---------------------------------------------
   // ---------     Interaction            --------
@@ -264,5 +279,4 @@ function createTestChart(input_data, id) {
         tooltip.style('display', 'none');
         tooltip.style('opacity',0);
     });
-
 }

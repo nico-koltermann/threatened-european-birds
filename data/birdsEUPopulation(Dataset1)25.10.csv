@@ -1,5 +1,4 @@
-﻿birdsEUPopulation(Dataset1);;;;;;;;
-speciescode;speciesname;keywintering;distribution_surface_area;population_minimum_size;population_maximum_size;CRd_list_cat;red_list_cat_prev;taxFamily_en
+﻿speciescode;speciesname;keywintering;distribution_surface_area;population_minimum_size;population_maximum_size;red_list_cat;red_list_cat_prev;taxFamily_en
 A001;Gavia stellata;N;392000;3000;4800;LC;LC;Loons/divers
 A002;Gavia arctica;N;634000;14800;19500;LC;LC;Loons/divers
 A003;Gavia immer;Y;-1;6900;7700;LC;VU;Loons/divers
