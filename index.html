@@ -37,10 +37,13 @@
   <!-- D3 -->
   <script type="text/javascript" src = "js/d3.v6.min.js"></script> 
   
+  <!-- Utils -->
+  <script type="text/javascript" src="js/config.js"></script>
+  <script type="text/javascript" src="js/helper.js"></script>
+
   <!-- Plot scripts-->
   <script type="text/javascript" src="js/scatter-plot.js"></script>
   <script type="text/javascript" src="js/dot-matrix.js"></script>
-  <script type="text/javascript" src="js/dot-matrix-old.js"></script>
   <script type="text/javascript" src="js/script.js"></script>
   
 </head>
@@ -58,7 +61,15 @@
 
     <div class="d-flex justify-content-around mb-4">
       <div style="width: 50%" class="chart-container my-5">
-        <div id="testChart"></div>
+        <div id="   "></div>
+        <select class="mdb-select md-form" searchable="Search here..">
+          <option value="" disabled selected>Choose your country</option>
+          <option value="1">USA</option>
+          <option value="2">Germany</option>
+          <option value="3">France</option>
+          <option value="3">Poland</option>
+          <option value="3">Japan</option>
+        </select>
       </div>
       <div style="width: 40%" class="chart-container my-5">
         <!-- <svg id="scatterPlot"></svg> -->
