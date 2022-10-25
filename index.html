@@ -48,29 +48,44 @@
   <!-- Content - Charts -->
   <div class="page-content d-flex flex-row justify-content-around">
 
-    <div class="d-flex justify-content-center mb-4">
+    <!-- Left Container -->
+    <div style="width: 55%" class="d-flex flex-column justify-content-center mb-4">
+
+      <!-- TOP: MAP -->
       <div style="width: 100%" class="chart-container my-5">
-        <svg id="scatterPlot"></svg>
+        <svg id="map"></svg>
+        <img height="350px" src="images/map_mockup.png" />
       </div>
-      <div>
-        <div style="width: 40%" class="chart-container my-5">
-          <svg id="scatterPlot"></svg>
+
+      <!-- BOTTOM -->
+      <div class="d-flex justify-content-between">
+
+        <!-- RED LIST PLOT -->
+        <div style="width: 40%; height: fit-content;" class="chart-container my-5">
+          <svg id="red_list_plot"></svg>
+          <img style="width: 100%; height: 100%" src="images/red_list_mockup.png" />
         </div>
-        <div style="width: 40%" class="chart-container my-5">
+
+        <!-- SCATTERPLOT -->
+        <div style="width: 50%" class="chart-container my-5 ml-5 d-flex justify-content-between">
           <svg id="scatterPlot"></svg>
-          <div style="width: 2%; float: left; text-align: center; margin-left: -110px;" class="chart-container my-5">
-            <button id="LC" class="button" style="background-color:#05700f"">LC</button>
-            <button id="NT" class="button" style="background-color:#7AD600">NT</button>
-            <button id="VU" class="button" style="background-color:#FFD740">VU</button>
-            <button id="EN" class="button" style="background-color:#FF8400">EN</button>
-            <button id="CR" class="button" style="background-color:#D90000">CR</button>
-            <button id="EX" class="button" style="background-color:rgb(99, 27, 27)">EX</button>
+          <div style="width: 10%" class="d-flex flex-column">
+            <button id="LC" class="btn btn-light button" style="background-color:#05700f"">LC</button>
+            <button id="NT" class="btn btn-light button" style="background-color:#7AD600">NT</button>
+            <button id="VU" class="btn btn-light button" style="background-color:#FFD740">VU</button>
+            <button id="EN" class="btn btn-light button" style="background-color:#FF8400">EN</button>
+            <button id="CR" class="btn btn-light button" style="background-color:#D90000">CR</button>
+            <button id="EX" class="btn btn-light button" style="background-color:rgb(99, 27, 27)">EX</button>
           </div>
+
+        <!-- END Bottom Container -->
         </div>
-      <div style="width: 40%" class="chart-container my-5"><svg id="dotMatrix"></svg>
-      </div>
+    <!-- END -  left container -->
+    </div>
+
     </div>  
 
+    <!-- Right Container -->
     <div class="chart-container my-5">
       <div id="dotMatrix"></div>
     </div>
