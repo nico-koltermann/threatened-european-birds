@@ -8,7 +8,7 @@ function handleMouseOver(item) {
     .filter(function (d, i) {
       return d.speciescode == item.speciescode;
     })
-    .attr("r", zoomSize);
+    .attr( "d", d3.symbol().size(zoomSymbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
 }
 
 function handleSingleMouseOver(item) {
@@ -23,7 +23,7 @@ function handleMouseLeave(item) {
   d3.selectAll(".itemValue")
     .attr("r", scatterCircleSize);  
   d3.selectAll(".singleItem")
-    .attr("r", dotMatrixCircleSize);
+    .attr( "d", d3.symbol().size(symbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
 }
 
 function redListCatButton(cat) {
@@ -59,6 +59,10 @@ function redListCatButton(cat) {
 }
 
 function handleDotMatrixClick () {
+
+}
+
+function handleDotMatrixLegendClick () {
 
 }
 
