@@ -46,25 +46,26 @@
 
   <!-- ---------------------------------- -->
   <!-- Content - Charts -->
-  <div class="page-content">
+  <div class="page-content d-flex flex-row justify-content-around">
 
-    <div class="d-flex justify-content-around mb-4">
-      <div style="width: 90%" class="chart-container my-5">
-        <div id="dotMatrix"></div>
-        <select class="mdb-select md-form" searchable="Search here..">
-          <option value="" disabled selected>Choose your country</option>
-          <option value="1">USA</option>
-          <option value="2">Germany</option>
-          <option value="3">France</option>
-          <option value="3">Poland</option>
-          <option value="3">Japan</option>
-        </select>
+    <div class="d-flex justify-content-center mb-4">
+      <div style="width: 100%" class="chart-container my-5">
+        <svg id="scatterPlot"></svg>
+      </div>
+      <div>
+        <div style="width: 40%" class="chart-container my-5">
+          <svg id="scatterPlot"></svg>
+        </div>
+        <div style="width: 40%%" class="chart-container my-5">
+          <svg id="scatterPlot"></svg>
+        </div>
       </div>
     </div>  
-    
-    <div style="width: 40%" class="chart-container my-5">
-      <!-- <svg id="scatterPlot"></svg> -->
+
+    <div class="chart-container my-5">
+      <div id="dotMatrix"></div>
     </div>
+
   <!-- ---------------------------------- -->
   <!-- Page Content End -->
   </div>
