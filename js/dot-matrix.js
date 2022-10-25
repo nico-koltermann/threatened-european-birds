@@ -7,7 +7,7 @@ function createTestChart(input_data, id) {
   // set the dimensions and margins of the graph
   const margin = {top: 20, right: 20, bottom: 60, left: 150};
   const width = 630 - margin.left - margin.right;
-  const height = 900 - margin.top - margin.bottom;
+  const height = 1000 - margin.top - margin.bottom;
 
   // ---------------------------------------------
   // ---------        Filter Data      -----------
@@ -126,7 +126,7 @@ function createTestChart(input_data, id) {
     .attr("x1", 0)
     .attr("y1", 0)
     .attr("x2", width)
-    .attr("y2", 0); 
+    .attr("y2", 0);
       
   // ---------------------------------------------
   // ---------       Chart Data           --------
@@ -165,14 +165,24 @@ function createTestChart(input_data, id) {
     .data(finalData)
     .enter()
       .append("circle")
+      // .append("svg:marker") 
+      // .attr("class", function(d) {
+      //   if (d.keywintering == 'N') {
+      //     return 'circle';
+      //   } else {
+      //     return 'rect';
+      //   }
+      // })
         .attr("class", "dotMatrixDot singleItem")
+        // .attr("d", customSqr)
+        // .attr("transform", 'translate(' + x + ',' + y + ')');
         .attr("cx", function(d,i) {return d.x ; })
         .attr("cy", function(d,i) { return y(d.y); })
         .attr("r", function(d,i) {
           return dotMatrixCircleSize; 
         })
         .style("fill",function(d){
-          return getColor(d);
+          return getColor(d.red_list_cat);
         });
 
   // ---------------------------------------------
@@ -209,7 +219,7 @@ function createTestChart(input_data, id) {
       tooltip.select('.surface_area').html("<b>Suface Area: " + area + "</b>");
 
       tooltip.style('display', 'block');
-      tooltip.style('border', '6px solid' + getColor(d));
+      tooltip.style('border', '6px solid' + getColor(d.red_list_cat));
       tooltip.style('opacity', 2);
 
     })

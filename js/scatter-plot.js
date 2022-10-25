@@ -19,95 +19,49 @@ function createScatterPlot(id, dataPath) {
     d3.json("data/data.json").then(function (data) {
 
       const x = d3
-          .scaleLinear()
-          .domain([0, 4500000])
-          .range([0,width]);
+        .scaleLog()
+        .domain([1, 4500000])
+        .range([0,width]);
       svg
-          .append("g")
-          .attr("id", "gXAxis")
-          .attr("transform", `translate(0, ${height + margin.top})`)
-          .call(d3.axisBottom(x).tickFormat((x) => x / 1000000 + "M"));
+        .append("g")
+        .attr("id", "gXAxis")
+        .attr("transform", `translate(0, ${height + margin.top})`)
+        .call(d3.axisBottom(x).tickFormat((x) => x / 1000000 + "M"));
       
       const y = d3
-          .scaleLinear()
-          .domain([0, 20000000])
+          .scaleLog()
+          .domain([1, 20000000])
           .range([height, 0])
-          
+
+      data = data.filter(function (d) { return d.distribution_surface_area > 0 });
+
       svg
-          .append("g")
-          .call(d3.axisLeft(y))
-          .attr("id", "gYAxis");
+        .append("g")
+        .call(d3.axisLeft(y))
+        .attr("id", "gYAxis");
       svg
-          .selectAll("circle")
-          .data(data)
-          .join("circle")
-          .attr("class", "circleValues itemValue")
-          .attr("cx", (d) => x(d.distribution_surface_area))
-          .attr("cy", (d) => y(d.population_maximum_size))
-          .attr("r", 2)
-          .attr("fill", function(d){return myColor(d.red_list_cat) })
-          //.style("fill",function(d){return redListCatColorScale[d.red_list_cat] ;});
-          .on("mouseover", (event, d) => handleMouseOver(d))
-          .on("mouseleave", (event, d) => handleMouseLeave())
-          .append("speciesname")
-          .text((d) => d.speciesname)
-          //.style("fill",function(d){return redListCatColorScale[d.red_list_cat] ;});
+        .selectAll("circle")
+        .data(data)
+        .join("circle")
+        .attr("class", "circleValues itemValue")
+        .attr("cx", (d) => x(d.distribution_surface_area))
+        .attr("cy", (d) => y(d.population_maximum_size))
+        .attr("r", scatterCircleSize)
+        .attr("fill", function(d){return getColor(d.red_list_cat) })
+        //.style("fill",function(d){return redListCatColorScale[d.red_list_cat] ;});
+        .on("mouseover", (event, d) => handleMouseOver(d))
+        .on("mouseleave", (event, d) => handleMouseLeave())
+        .append("speciesname")
+        .text((d) => d.speciesname)
+        //.style("fill",function(d){return redListCatColorScale[d.red_list_cat] ;});
 
   });
 }
 
 function updateScatterPlot(id, dataPath) {
-  d3.json("data/data.json").then(function (data) {
-    data = data.filter(function (elem) {
-      return start <= elem.red_list_cat && elem.red_list_cat <= finish;
-    });
+  
 
-    const svg = d3.select("#gScatterPlot");
-
-    const x = d3
-      .scaleLinear()
-      .domain([0, d3.max(data, (d) => d.distribution_surface_area)])
-      .range([0, width]);
-    svg
-      .select("#gXAxis")
-      .call(d3.axisBottom(x).tickFormat((x) => x / 1000000 + "M"));
-
-    const y = d3.scaleLinear().domain([0, 35000000]).range([height, 0]);
-    svg.select("gYAxis").call(d3.axisLeft(y));
-
-    svg
-      .selectAll("circle.circleValues")
-      .data(data, (d) => d.red_list_cat)
-      .join(
-        (enter) => {
-          circles = enter
-            .append("circle")
-            .attr("class", "circleValues itemValue singleItem")
-            .attr("cx", (d) => x(d.distribution_surface_area))
-            .attr("cy", (d) => y(0))
-            .attr("r", 2)
-            .attr("fill", function(d){return myColor(d.red_list_cat) })
-            .on("mouseover", (event, d) => handleMouseOver(d))
-            .on("mouseleave", (event, d) => handleMouseLeave())
-          circles
-            .transition()
-            .duration(1000)
-            .attr("cy", (d) => y(d.population_maximum_size));
-          circles.append("title").text((d) => d.red_list_cat);
-        },
-        (update) => {
-          update
-            .transition()
-            .duration(1000)
-            .attr("cx", (d) => x(d.distribution_surface_area))
-            .attr("cy", (d) => y(d.population_maximum_size))
-            .attr("r", 2);
-        },
-        (exit) => {
-          exit.remove();
-        }
-      );
-  });
+  
 }
 
 
