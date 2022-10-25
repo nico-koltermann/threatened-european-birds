@@ -82,7 +82,7 @@ function updateScatterPlot(id, dataPath) {
         (enter) => {
           circles = enter
             .append("circle")
-            .attr("class", "circleValues itemValue")
+            .attr("class", "circleValues itemValue singleItem")
             .attr("cx", (d) => x(d.distribution_surface_area))
             .attr("cy", (d) => y(0))
             .attr("r", 2)
@@ -108,18 +108,6 @@ function updateScatterPlot(id, dataPath) {
         }
       );
   });
-}
-function handleMouseOver(item) {
-  d3.selectAll(".itemValue")
-    .filter(function (d, i) {
-      return d.red_list_cat == item.red_list_cat;
-    })
-    .attr("r", 6)
-    .attr("fill", "red");
-}
-
-function handleMouseLeave(item) {
-  d3.selectAll(".itemValue").attr("fill", function(d){return myColor(d.red_list_cat)}).attr("r", 2);
 }
 
 

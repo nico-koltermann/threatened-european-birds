@@ -13,17 +13,23 @@
   <!-- Custom sylesheet -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/dot-matrix.css">
+  <link rel="stylesheet" href="css/map.css" />
 
   <!-- D3 -->
   <script type="text/javascript" src = "library/d3.v6.min.js"></script> 
   
+  <!-- D3 Topo -->
+  <script src="library/topojson.v1.min.js"></script>
+
   <!-- Utils -->
   <script type="text/javascript" src="js/util/config.js"></script>
   <script type="text/javascript" src="js/util/helper.js"></script>
+  <script type="text/javascript" src="js/interactions.js"></script>
 
   <!-- Plot scripts-->
   <script type="text/javascript" src="js/scatter-plot.js"></script>
   <script type="text/javascript" src="js/dot-matrix.js"></script>
+  <!-- <script type="text/javascript" src="js/map.js"></script> -->
   <script type="text/javascript" src="js/script.js"></script>
   
 </head>
@@ -53,8 +59,8 @@
 
       <!-- TOP: MAP -->
       <div style="width: 100%" class="chart-container my-5">
-        <svg id="map"></svg>
-        <img height="350px" src="images/map_mockup.png" />
+        <svg id="mapEurope"></svg>
+        <!-- <img height="350px" src="images/map_mockup.png" /> -->
       </div>
 
       <!-- BOTTOM -->
