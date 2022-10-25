@@ -5,7 +5,7 @@ function init() {
     createTestChart(data, "#dotMatrix");
   });
   createScatterPlot("#scatterPlot");
-  
+
   d3.select("#LC").on("click", () => {
     updateScatterPlot(LC, dataPath);
     //updateDotMatrix(LC);
