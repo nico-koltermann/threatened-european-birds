@@ -9,11 +9,23 @@
   --Unknown: #808080;
 }
 
-cr-color { color: var(--CR) }
-en-color { color: var(--EN) }
-vu-color { color: var(--VU) }
-nt-color { color: var(--NT) }
-lc-color { color: var(--LC) }
+@font-face {
+  font-family: Flaviotte;
+  src: url('../library/fonts/Flaviotte.otf') format("opentype");
+}
+
+
+.cr-color { color: var(--CR) }
+.en-color { color: var(--EN) }
+.vu-color { color: var(--VU) }
+.nt-color { color: var(--NT) }
+.lc-color { color: var(--LC) }
+
+.cr-bg-color { background-color: var(--CR) }
+.en-bg-color { background-color: var(--EN) }
+.vu-bg-color { background-color: var(--VU) }
+.nt-bg-color { background-color: var(--NT) }
+.lc-bg-color { background-color: var(--LC) }
 
 * {
 	margin: 0;
@@ -21,8 +33,19 @@ lc-color { color: var(--LC) }
 }
 
 body {
-	font-family: lato;
+  font-family: "Flaviotte";
   background-attachment: scroll;
+}
+
+.category-div {
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  margin: 0.25rem;
+  font-size: small;
+  font-weight: bold;
+  background-color: whitesmoke;
+  border: 3px solid rgb(1, 22, 107);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
 }
 
 .page-content {
@@ -46,9 +69,15 @@ body {
   width: 100%;
 }
 
+.headline-text {
+  margin-top: 0.25rem;
+  font-family: "Flaviotte";
+  color: #FFCC00;
+}
+
 .headline {
   position: fixed;
-  background-color: rgb(94, 179, 68);
+  background-color: #003399;
   width: 100%;
   height: var(--header-size);
   top: 0;
