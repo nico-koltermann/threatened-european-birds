@@ -60,7 +60,7 @@
       <!-- TOP: MAP -->
       <div style="width: 100%" class="chart-container my-5">
         <svg id="mapEurope"></svg>
-        <!-- <img height="350px" src="images/map_mockup.png" /> -->
+        <img height="350px" src="images/map_mockup.png" />
       </div>
 
       <!-- BOTTOM -->
@@ -76,12 +76,16 @@
         <div style="width: 50%" class="chart-container my-5 ml-5 d-flex justify-content-between">
           <svg id="scatterPlot"></svg>
           <div style="width: 10%" class="d-flex flex-column">
-            <button id="LC" class="btn btn-light button" style="background-color:#05700f"">LC</button>
-            <button id="NT" class="btn btn-light button" style="background-color:#7AD600">NT</button>
-            <button id="VU" class="btn btn-light button" style="background-color:#FFD740">VU</button>
-            <button id="EN" class="btn btn-light button" style="background-color:#FF8400">EN</button>
-            <button id="CR" class="btn btn-light button" style="background-color:#D90000">CR</button>
-            <button id="EX" class="btn btn-light button" style="background-color:rgb(99, 27, 27)">EX</button>
+            <button id="btn-LC" class="btn btn-light button lc-bg-color" onclick="redListCatButton('LC')">
+              LC</button>
+            <button id="btn-NT" class="btn btn-light button nt-bg-color" onclick="redListCatButton('NT')">
+              NT</button>
+            <button id="btn-VU" class="btn btn-light button vu-bg-color" onclick="redListCatButton('VU')">
+              VU</button>
+            <button id="btn-EN" class="btn btn-light button en-bg-color" onclick="redListCatButton('EN')">
+              EN</button>
+            <button id="btn-CR" class="btn btn-light button cr-bg-color" onclick="redListCatButton('CR')">
+              CR</button>   
           </div>
 
         <!-- END Bottom Container -->

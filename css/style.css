@@ -6,6 +6,7 @@
   --NT: #7AD600;
   --NT: #7AD600;
   --LC: #006400;
+  --EX: #631b1b;
   --Unknown: #808080;
 }
 
@@ -14,12 +15,14 @@
   src: url('../library/fonts/Flaviotte.otf') format("opentype");
 }
 
+.ex-color { color: var(--EX) }
 .cr-color { color: var(--CR) }
 .en-color { color: var(--EN) }
 .vu-color { color: var(--VU) }
 .nt-color { color: var(--NT) }
 .lc-color { color: var(--LC) }
 
+.ex-bg-color { background-color: var(--EX) }
 .cr-bg-color { background-color: var(--CR) }
 .en-bg-color { background-color: var(--EN) }
 .vu-bg-color { background-color: var(--VU) }
@@ -96,4 +99,9 @@ body {
 .button {
   border-radius: 0.5rem;
   margin: 0.25rem;
+}
+
+.qt-text {
+  font-family: Arial, Helvetica, sans-serif !important;
+  fill: grey;
 }

@@ -5,13 +5,15 @@ function createTestChart(input_data, id) {
   // ---------------------------------------------
 
   // set the dimensions and margins of the graph
-  const margin = {top: 20, right: 20, bottom: 60, left: 150};
-  const width = 630 - margin.left - margin.right;
-  const height = 900 - margin.top - margin.bottom;
+  const margin = {top: 10, right: 20, bottom: 10, left: 150};
+  const width = 700 - margin.left - margin.right;
+  const height = 1000 - margin.top - margin.bottom;
 
   // ---------------------------------------------
   // ---------        Filter Data      -----------
   // ---------------------------------------------
+
+  console.log(input_data);
 
   // Filter data for color
   // TODO: This is a fast and dirty way, rewrite this section
@@ -20,14 +22,6 @@ function createTestChart(input_data, id) {
   data_VU = [];
   data_NT = [];
   data_LC = [];
-  data_UNK = [];
-  input_data.forEach( x => { if (x.red_list_cat == 'Unknown' ||
-    (  !x.red_list_cat.includes('CR')
-    && !x.red_list_cat.includes('EN')
-    && !x.red_list_cat.includes('VU')
-    && !x.red_list_cat.includes('NT')
-    && !x.red_list_cat.includes('LC')
-    )) data_UNK.push(x) });
   input_data.forEach( x => { if (x.red_list_cat.includes('CR')) data_CR.push(x) });
   input_data.forEach( x => { if (x.red_list_cat.includes('EN')) data_EN.push(x) });
   input_data.forEach( x => { if (x.red_list_cat.includes('VU')) data_VU.push(x) });
@@ -35,8 +29,7 @@ function createTestChart(input_data, id) {
   input_data.forEach( x => { if (x.red_list_cat.includes('LC')) data_LC.push(x) });
   
   // Build final data, sort by population size 
-  data = data_UNK
-    .concat(data_CR.sort(comparePop))
+  data = data_CR
     .concat(data_EN.sort(comparePop))
     .concat(data_VU.sort(comparePop))
     .concat(data_NT.sort(comparePop))
@@ -94,7 +87,7 @@ function createTestChart(input_data, id) {
   d3.select(".y-axis").selectAll(".tick")
     .each(function(d){
         yValues.push(d)
-    }) 
+    });
 
   svg.append('line')
     .style("stroke", "black")
@@ -126,7 +119,7 @@ function createTestChart(input_data, id) {
     .attr("x1", 0)
     .attr("y1", 0)
     .attr("x2", width)
-    .attr("y2", 0); 
+    .attr("y2", 0);
       
   // ---------------------------------------------
   // ---------       Chart Data           --------
@@ -160,20 +153,75 @@ function createTestChart(input_data, id) {
       });
   }
 
-  svg.append('g')
-    .selectAll("dot")
+  svg.append("g")
+      .attr("stroke-width", 1.5)
+      .attr("font-family", "sans-serif")
+      .attr("font-size", 10)
+    .selectAll("path")
     .data(finalData)
-    .enter()
+    .join("path")
+      .attr("class", "dotMatrixDot singleItem")
+      .attr("transform", d => `translate(${d.x},${y(d.y)})`)
+      // .attr("d", function (d) { return getSymbolWithSize(d, symboSizeDotMatrix); })
+      .attr( "d", d3.symbol().size(symbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
+      .style("fill",function(d) {
+        return getColor(d.red_list_cat);
+      });
+
+
+    const colorsWintering = ["brown", "blue"];
+
+    // add legend
+    var legend = svg
+      .selectAll(".legend")
+      .data(['Breeding', 'Wintering'])
+      .enter()
+      .append("g")
+      .attr("class", "legend")
+      .attr("border", "2px solid black")
+      .attr("transform", "translate(-100," + 20 + ")");
+
+    legend
       .append("circle")
-        .attr("class", "dotMatrixDot singleItem")
-        .attr("cx", function(d,i) {return d.x ; })
-        .attr("cy", function(d,i) { return y(d.y); })
-        .attr("r", function(d,i) {
-          return dotMatrixCircleSize; 
-        })
-        .style("fill",function(d){
-          return getColor(d);
-        });
+      .attr('class', 'legendEntryBreed')
+      .attr("cx",  width-margin.right)
+      .attr("cy", 5)
+      .attr("r", 8)
+      .attr("curser", "pointer")
+      .style("fill", colorsWintering[0])
+
+    legend
+      .append('path')
+      .attr('class', 'legendEntryWinter')
+      .attr("transform", function (d,i) {
+        return 'translate(' + (width - 20) + ', ' + 25 + ')';
+      })
+      .attr("d", d3.symbol().size(100).type(d3.symbols[4]))
+      .attr("curser", "pointer")
+      .style("fill", colorsWintering[1]);
+
+    legend
+      .append("text")
+      .attr('class', 'legendEntryBreed')
+      .attr("x", width-margin.right+15)
+      .attr("y", 10)
+      .attr("fill", colorsWintering[0])
+      .text('Breeding')
+      .on('click', function(e, d) {
+        winteringFilter("Breeding");
+      });
+
+      legend
+        .append("text")
+          .attr('class', 'legendEntryWinter')
+          .attr("x", width-margin.right+15)
+          .attr("y", 30)
+          .attr("fill", colorsWintering[1])
+          .text('Wintering')
+          .on('click', function(e, d) {
+            winteringFilter("Wintering");
+          });
+
 
   // ---------------------------------------------
   // ---------     Interaction            --------
@@ -196,7 +244,7 @@ function createTestChart(input_data, id) {
   tooltip.append('div')
     .attr('class', 'red_list');
 
-  svg.selectAll("circle")
+  svg.selectAll(".dotMatrixDot")
     .on('mouseover', function(e, d) {
       handleSingleMouseOver(d);
       tooltip.select('.red_list').html("<b>Red List: " + d.red_list_cat + "</b>");
@@ -209,15 +257,16 @@ function createTestChart(input_data, id) {
       tooltip.select('.surface_area').html("<b>Suface Area: " + area + "</b>");
 
       tooltip.style('display', 'block');
-      tooltip.style('border', '6px solid' + getColor(d));
+      tooltip.style('border', '6px solid' + getColor(d.red_list_cat));
       tooltip.style('opacity', 2);
 
     })
     .on('mousemove', function(e, d) {
         handleSingleMouseOver(d);
         d3.select(this)
-          .attr("r", zoomSizeMatrixDot)
+          .attr( "d", d3.symbol().size(zoomSymbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
           .style('cursor', 'pointer');
+
         tooltip
           .style('top', (e.layerY + 10) + 'px')
           .style('left', (e.layerX - 25) + 'px');
@@ -225,11 +274,9 @@ function createTestChart(input_data, id) {
     .on('mouseout', function(e, d) {
         handleMouseLeave(d);
         d3.select(this)
-          .attr("r", function(d,i) {
-            return dotMatrixCircleSize; 
-          });
+        .attr( "d", d3.symbol().size(symbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) );
+
         tooltip.style('display', 'none');
         tooltip.style('opacity',0);
     });
-
 }
