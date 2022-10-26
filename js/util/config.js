@@ -2,9 +2,11 @@
 // ---------         General         -----------
 // ---------------------------------------------
 
-const zoomSize = 10;
+// Load data path
+const dataPath = "data/birdsEUPopulation_Dataset1.csv";
 
 // TODO: Fix data
+// Same as in the css
 let redListCatColorScale = {
   "CR": "#D90000",
   "CR ": "#D90000",
@@ -21,7 +23,10 @@ let redListCatColorScale = {
   "Unknown ": "#808080"
 }
 
-const pageItemClass = "itemValue"
+
+// Class Names
+const scatterItem = "scatterItem"
+const dotMatrixItem = "dotMatrixItem"
 
 // Do the checks
 const grey = "rgb(176, 176, 176)";
@@ -30,16 +35,31 @@ const grey = "rgb(176, 176, 176)";
 // ---------        Scatter Plot     -----------
 // ---------------------------------------------
 
+const margin_scatter = { top: 30, right: 100, bottom: 80, left: 100 };
+const width_scatter = 600 - margin_scatter.left - margin_scatter.right;
+const height_scatter = 400 - margin_scatter.top - margin_scatter.bottom;
+
 const scatterCircleSize = 4;
+const scatterZoomSize = 10;
 
 // ---------------------------------------------
 // ---------         Dot Matrix      -----------
 // ---------------------------------------------
 
-const step = 12;
-const normalSizeMatrixDot = 5;
-const zoomSizeMatrixDot = 10;
-const dotMatrixCircleSize = 4;
+const margin_dotMatrix = {top: 10, right: 20, bottom: 10, left: 150};
+const width_dotMatrix = 700 - margin_dotMatrix.left - margin_dotMatrix.right;
+const height_dotMatrix = 1000 - margin_dotMatrix.top - margin_dotMatrix.bottom;
 
+const distanceToYAxis = 10;
+
+const step = 12;
 const symbolSizeDotMatrix = 80;
 const zoomSymbolSizeDotMatrix = 250;
+
+// ---------------------------------------------
+// ---------       Map               -----------
+// ---------------------------------------------
+
+// ---------------------------------------------
+// ---------        Jenkey Plot      -----------
+// ---------------------------------------------
