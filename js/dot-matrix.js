@@ -126,7 +126,7 @@ function createTestChart(input_data, id) {
     .selectAll("path")
     .data(finalData)
     .join("path")
-      .attr("class", "dotMatrixDot" + dotMatrixItem)
+      .attr("class", "dotMatrixDot " + dotMatrixItem)
       .attr("transform", d => `translate(${d.x},${y(d.y)})`)
       .attr( "d", d3.symbol().size(symbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
       .style("fill",function(d) {
