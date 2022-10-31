@@ -23,6 +23,12 @@ let redListCatColorScale = {
   "Unknown ": "#808080"
 }
 
+allRedListCats = ['CR', 'EN', 'VU', 'NT', 'LC']
+
+const breedingColor = 'grey'
+const winteringColor = 'grey'
+const breedingText = 'Breeding'
+const winteringText = 'Wintering'
 
 // Class Names
 const scatterItem = "scatterItem"
@@ -61,5 +67,9 @@ const zoomSymbolSizeDotMatrix = 250;
 // ---------------------------------------------
 
 // ---------------------------------------------
-// ---------        Jenkey Plot      -----------
+// ---------        Sankey Plot      -----------
 // ---------------------------------------------
+
+const margin_sankey = {top: 10, right: 20, bottom: 10, left: 150};
+const width_sankey = 700 - margin_sankey.left - margin_sankey.right;
+const height_sankey = 1000 - margin_sankey.top - margin_sankey.bottom;

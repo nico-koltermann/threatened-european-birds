@@ -11,10 +11,10 @@ let ___filterStates___ = {
 
 function handleMouseOver(item) {
   d3.selectAll("." + scatterItem)
-    .filter(function (d, i) {
-      return d.red_list_cat == item.red_list_cat || d.speciescode == item.speciescode;
-    })
-    .attr("r", scatterZoomSize);
+  .filter(function (d, i) {
+    return d.speciescode == item.speciescode;
+  })
+  .attr("r", scatterZoomSize);
   d3.selectAll("." + dotMatrixItem)
     .filter(function (d, i) {
       return d.speciescode == item.speciescode;
@@ -71,6 +71,22 @@ function redListCatButton(cat) {
   createQuartileLines();
 }
 
+function onRedListButtonHover(cat) {
+  d3.selectAll("." + scatterItem)
+  .filter(function (d, i) {
+    return d.red_list_cat == cat;
+  })
+  .attr("r", scatterZoomSize);
+}
+
+function onRedListButtonLeave(cat) {
+  d3.selectAll("." + scatterItem)
+  .filter(function (d, i) {
+    return d.red_list_cat == cat;
+  })
+  .attr("r", scatterCircleSize);
+}
+
 function winteringFilter(filter) {
 
   filterMatch = {
@@ -84,7 +100,7 @@ function winteringFilter(filter) {
       .attr('fill', grey);
     } else {
       d3.selectAll('.legendEntryBreed')
-        .attr('fill', 'brown');
+        .attr('fill', breedingColor);
     }
   }
 
@@ -94,7 +110,7 @@ function winteringFilter(filter) {
       .attr('fill', grey);
     } else {
       d3.selectAll('.legendEntryWinter')
-        .attr('fill', 'blue');
+        .attr('fill', winteringColor);
     }
   }
 

@@ -35,7 +35,6 @@
 }
 
 body {
-  font-family: "Flaviotte";
   background-attachment: scroll;
 }
 
@@ -45,9 +44,9 @@ body {
   margin: 0.25rem;
   font-size: large;
   font-weight: bold;
-  background-color: whitesmoke;
+  background-color: rgb(255, 255, 255);
   border: 3px solid rgb(1, 22, 107);
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
+  box-shadow: 1px 1px 12px 1px rgba(0, 59, 118, 0.798);
 }
 
 .page-content {
@@ -55,11 +54,11 @@ body {
 }
 
 .demo-bg {
-  background-image: url("../images/photo-1511497584788-876760111969.avif");
+  background-color:rgb(179, 185, 243);
   opacity: 0.2;
   position: fixed;
   left: 0;
-  top: var(--header-size);
+  top: var(--header-size);   
   width: 100%;
   height: 100%;
   z-index: -1;
@@ -90,18 +89,35 @@ body {
 .chart-container {
   height: fit-content;
   width: fit-content;
-  background-color: rgb(229, 245, 229);
+  background-color: rgb(232, 232, 232);
   padding: 2rem;
-  border: 1px solid black;
-  box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+  border-radius: 1rem;
+  border: 1px solid rgb(230, 230, 230);
+  box-shadow: 5px 5px 5px 5px rgba(199, 199, 199, 0.656);
 }
 
 .button {
   border-radius: 0.5rem;
+  border: 1px solid black;
   margin: 0.25rem;
 }
+
+
+.button:hover {
+  filter: brightness(85%);
+  border-radius: 0.5rem;
+  border: 1px solid black;
+  margin: 0.25rem;
+}
+
 
 .qt-text {
   font-family: Arial, Helvetica, sans-serif !important;
   fill: grey;
+}
+
+.tooltip-text {
+  font-size:small;
+  color: black;
+  font-weight: 900;
 }

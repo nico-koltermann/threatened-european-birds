@@ -17,6 +17,7 @@
 
   <!-- D3 -->
   <script type="text/javascript" src = "library/d3.v6.min.js"></script> 
+  <script type="text/javascript" src = "library/d3-sankey.min.js"></script> 
   
   <!-- D3 Topo -->
   <script src="library/topojson.v1.min.js"></script>
@@ -30,6 +31,7 @@
   <script type="text/javascript" src="js/scatter-plot.js"></script>
   <script type="text/javascript" src="js/dot-matrix.js"></script>
   <!-- <script type="text/javascript" src="js/map.js"></script> -->
+  <script type="text/javascript" src="js/sankey.js"></script>
   <script type="text/javascript" src="js/script.js"></script>
   
 </head>
@@ -66,25 +68,40 @@
       <!-- BOTTOM -->
       <div class="d-flex justify-content-between">
 
-        <!-- RED LIST PLOT -->
+        <!-- Sankey -->
         <div style="width: 40%; height: fit-content;" class="chart-container my-5">
-          <svg id="red_list_plot"></svg>
-          <img style="width: 100%; height: 100%" src="images/red_list_mockup.png" />
+          <!-- <svg id="sankey"></svg> -->
+          <!-- <img style="width: 100%; height: 100%" src="images/red_list_mockup.png" /> -->
         </div>
 
         <!-- SCATTERPLOT -->
         <div style="width: 50%" class="chart-container my-5 ml-5 d-flex justify-content-between">
           <svg id="scatterPlot"></svg>
           <div style="width: 10%" class="d-flex flex-column">
-            <button id="btn-LC" class="btn btn-light button lc-bg-color" onclick="redListCatButton('LC')">
+            <button id="btn-LC" class="btn btn-light button lc-bg-color" 
+            onclick="redListCatButton('LC')" 
+            onmouseover="onRedListButtonHover('LC')" 
+            onmouseleave="onRedListButtonLeave('LC')">
               LC</button>
-            <button id="btn-NT" class="btn btn-light button nt-bg-color" onclick="redListCatButton('NT')">
+            <button id="btn-NT" class="btn btn-light button nt-bg-color" 
+            onclick="redListCatButton('NT')"
+            onmouseover="onRedListButtonHover('NT')" 
+            onmouseleave="onRedListButtonLeave('NT')">
               NT</button>
-            <button id="btn-VU" class="btn btn-light button vu-bg-color" onclick="redListCatButton('VU')">
+            <button id="btn-VU" class="btn btn-light button vu-bg-color" 
+            onclick="redListCatButton('VU')"
+            onmouseover="onRedListButtonHover('VU')" 
+            onmouseleave="onRedListButtonLeave('VU')">
               VU</button>
-            <button id="btn-EN" class="btn btn-light button en-bg-color" onclick="redListCatButton('EN')">
+            <button id="btn-EN" class="btn btn-light button en-bg-color" 
+            onclick="redListCatButton('EN')"
+            onmouseover="onRedListButtonHover('EN')" 
+            onmouseleave="onRedListButtonLeave('EN')">
               EN</button>
-            <button id="btn-CR" class="btn btn-light button cr-bg-color" onclick="redListCatButton('CR')">
+            <button id="btn-CR" class="btn btn-light button cr-bg-color" 
+            onclick="redListCatButton('CR')"
+            onmouseover="onRedListButtonHover('CR ')" 
+            onmouseleave="onRedListButtonLeave('CR ')">
               CR</button>   
           </div>
 

@@ -80,3 +80,6 @@ function getFilteredData(data) {
 
   return temp;
 }
+
+function filterData() {
+}

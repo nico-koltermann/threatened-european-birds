@@ -1,4 +1,4 @@
-function createTestChart(input_data, id) {
+function createDotMatrix(input_data, id) {
 
   // ---------------------------------------------
   // ---------        Filter Data      -----------
@@ -133,9 +133,6 @@ function createTestChart(input_data, id) {
         return getColor(d.red_list_cat);
       });
 
-
-    const colorsWintering = ["brown", "blue"];
-
     // add legend
     var legend = svg
       .selectAll(".legend")
@@ -153,7 +150,7 @@ function createTestChart(input_data, id) {
       .attr("cy", 5)
       .attr("r", 8)
       .attr("curser", "pointer")
-      .style("fill", colorsWintering[0])
+      .style("fill", breedingColor)
 
     legend
       .append('path')
@@ -163,15 +160,15 @@ function createTestChart(input_data, id) {
       })
       .attr("d", d3.symbol().size(100).type(d3.symbols[4]))
       .attr("curser", "pointer")
-      .style("fill", colorsWintering[1]);
+      .style("fill", winteringColor);
 
     legend
       .append("text")
       .attr('class', 'legendEntryBreed')
       .attr("x", width_dotMatrix-margin_dotMatrix.right+15)
       .attr("y", 10)
-      .attr("fill", colorsWintering[0])
-      .text('Breeding')
+      .attr("fill", breedingColor)
+      .text(breedingText)
       .on('click', function(e, d) {
         winteringFilter("Breeding");
       });
@@ -181,12 +178,11 @@ function createTestChart(input_data, id) {
           .attr('class', 'legendEntryWinter')
           .attr("x", width_dotMatrix-margin_dotMatrix.right+15)
           .attr("y", 30)
-          .attr("fill", colorsWintering[1])
-          .text('Wintering')
+          .attr("fill", winteringColor)
+          .text(winteringText)
           .on('click', function(e, d) {
             winteringFilter("Wintering");
           });
-
 
   // ---------------------------------------------
   // ---------     Interaction            --------
@@ -212,14 +208,14 @@ function createTestChart(input_data, id) {
   svg.selectAll(".dotMatrixDot")
     .on('mouseover', function(e, d) {
       handleSingleMouseOver(d);
-      tooltip.select('.red_list').html("<b>Red List: " + d.red_list_cat + "</b>");
-      tooltip.select('.code').html("<b>Code: " + d.speciescode + "</b>");
-      tooltip.select('.name').html("<b>Name: " + d.speciesname+ "</b>");
-      tooltip.select('.family').html("<b>Family: " + d.taxFamily_en + "</b>");
-      tooltip.select('.population').html("<b>Population: " + d.population_maximum_size + "</b>");
+      tooltip.select('.red_list').html('<b>Red List: <span class="tooltip-text">' + d.red_list_cat + '</span></b>');
+      tooltip.select('.code').html('<b>Code: <span class="tooltip-text">' + d.speciescode + '</span></b>');
+      tooltip.select('.name').html('<b>Name: <span class="tooltip-text">' + d.speciesname+ '</span></b>');
+      tooltip.select('.family').html('<b>Family: <span class="tooltip-text">' + d.taxFamily_en + '</span></b>');
+      tooltip.select('.population').html('<b>Population: <span class="tooltip-text">' + d.population_maximum_size + '</span></b>');
 
       const area = d.distribution_surface_area == -1 ? "-" : d.distribution_surface_area;
-      tooltip.select('.surface_area').html("<b>Suface Area: " + area + "</b>");
+      tooltip.select('.surface_area').html('<b>Suface Area: <span class="tooltip-text">' + area + '</span></b>');
 
       tooltip.style('display', 'block');
       tooltip.style('border', '6px solid' + getColor(d.red_list_cat));
