@@ -24,6 +24,13 @@ function comparePop(a, b) {
   return 1;
 }
 
+const red_list_rank = { CR: 1, EN: 2, VU: 3, NT: 4, LC: 5 }
+function compareRedList( left, right ) {
+  if (!red_list_rank[left.red_list_cat])  return -1;
+  if (!red_list_rank[right.red_list_cat]) return 1;
+  return red_list_rank[left.red_list_cat] - red_list_rank[right.red_list_cat];
+}
+
 const quantile = (arr, q) => {
   const sorted = arr.reverse();
   const pos = (sorted.length - 1) * q;
@@ -72,4 +79,7 @@ function getFilteredData(data) {
   // });
 
   return temp;
+}
+
+function filterData() {
 }
