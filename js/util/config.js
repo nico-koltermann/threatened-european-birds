@@ -43,7 +43,7 @@ const grey = "rgb(176, 176, 176)";
 
 const margin_scatter = { top: 30, right: 100, bottom: 80, left: 100 };
 const width_scatter = 600 - margin_scatter.left - margin_scatter.right;
-const height_scatter = 400 - margin_scatter.top - margin_scatter.bottom;
+const height_scatter = 500 - margin_scatter.top - margin_scatter.bottom;
 
 const scatterCircleSize = 4;
 const scatterZoomSize = 10;

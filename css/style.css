@@ -83,7 +83,7 @@ body {
   height: var(--header-size);
   top: 0;
   border: 1px solid black;
-  box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+  box-shadow: 5px 5px 2px 1px rgba(0, 0, 255, .2);
 }
 
 .chart-container {
@@ -92,8 +92,7 @@ body {
   background-color: rgb(232, 232, 232);
   padding: 2rem;
   border-radius: 1rem;
-  border: 1px solid rgb(230, 230, 230);
-  box-shadow: 5px 5px 5px 5px rgba(199, 199, 199, 0.656);
+  border: 3px solid #003399;
 }
 
 .button {
