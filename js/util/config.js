@@ -3,7 +3,7 @@
 // ---------------------------------------------
 
 // Load data path
-const dataPath = "data/birdsEUPopulation_Dataset1.csv";
+const dataPath = "data/merged_dataset01.11.csv";
 
 // TODO: Fix data
 // Same as in the css

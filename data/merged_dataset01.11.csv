@@ -1,4 +1,4 @@
-﻿;speciescode;speciesname_x;keywintering;distribution_surface_area;population_minimum_size;population_maximum_size;red_list_cat;conclusion_status_label;red_list_cat_prev;conclusion_status_label_prev;taxFamily_en;country;nationally_hunted
+﻿;speciescode;speciesname;keywintering;distribution_surface_area;population_minimum_size;population_maximum_size;red_list_cat;conclusion_status_label;red_list_cat_prev;conclusion_status_label_prev;taxFamily_en;country;nationally_hunted
 0;A036;Cygnus olor;N;1160000;66100.0;93600.0;LC;Secure;LC;Secure;Ducks, geese and swans;Austria;No
 1;A036;Cygnus olor;N;1160000;66100.0;93600.0;LC;Secure;LC;Secure;Ducks, geese and swans;Austria;No
 2;A036;Cygnus olor;N;1160000;66100.0;93600.0;LC;Secure;LC;Secure;Ducks, geese and swans;Germany;Yes
