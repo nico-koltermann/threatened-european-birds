@@ -1,44 +1,109 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>IV - EU Birds</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <title>IV - EU Birds</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap -->
-    <link href="library/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="library/bootstrap/js/jquery.js"></script>
-    <script src="library/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Bootstrap -->
+  <link href="library/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="library/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <script src="library/bootstrap/js/jquery.js"></script>
+  <script src="library/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Custom sylesheet -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- D3 -->
-    <script type="text/javascript" src = "js/d3.v6.min.js"></script> 
-    <!-- Plot scripts-->
-    <script type="text/javascript" src="js/script.js"></script>
-    
-  </head>
-  <body onload="init();">
+  <!-- Custom sylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dot-matrix.css">
+  <link rel="stylesheet" href="css/map.css" />
 
-  <div class="jumbotron">
-    <div class="container centering">
-    <h1>Information Visualization</h1>
-    <div style="width: 33%; float: left; text-align: center;">
-        <button class="btn btn-primary btn-lg btn-block" id="new">New</button>
-        <button class="btn btn-primary btn-lg btn-block" id="old">Old</button>
-        <button class="btn btn-primary btn-lg btn-block" id="all">All</button>
+  <!-- D3 -->
+  <script type="text/javascript" src = "library/d3.v6.min.js"></script> 
+  
+  <!-- D3 Topo -->
+  <script src="library/topojson.v1.min.js"></script>
+
+  <!-- Utils -->
+  <script type="text/javascript" src="js/util/config.js"></script>
+  <script type="text/javascript" src="js/util/helper.js"></script>
+  <script type="text/javascript" src="js/interactions.js"></script>
+
+  <!-- Plot scripts-->
+  <script type="text/javascript" src="js/scatter-plot.js"></script>
+  <script type="text/javascript" src="js/dot-matrix.js"></script>
+  <!-- <script type="text/javascript" src="js/map.js"></script> -->
+  <script type="text/javascript" src="js/script.js"></script>
+  
+</head>
+<body onload="init();">
+<div class="demo-bg"></div>
+
+  <!-- Static Header -->
+  <div class="headline d-flex justify-content-around align-items-center">
+    <div class="headline-text">
+      <h1>European Birds</h1>
     </div>
+    <div class="d-flex justify-content-around">
+      <div class="category-div lc-color">LC - Least Concern</div>
+      <div class="category-div nt-color">NT - Near Threaten</div>
+      <div class="category-div vu-color">VU - Vulnerable</div>
+      <div class="category-div en-color">EN - Endangered</div>
+      <div class="category-div cr-color">CR - Critically Endangered</div>
     </div>
   </div>
 
-  <div class="d-flex justify-content-around mb-4">
-    <div style="width: 50%" class="centering"><svg id="vi1"></svg></div>
-    <div style="width: 50%" class="centering"><svg id="vi2"></svg></div>
+  <!-- ---------------------------------- -->
+  <!-- Content - Charts -->
+  <div class="page-content d-flex flex-row justify-content-around">
+
+    <!-- Left Container -->
+    <div style="width: 55%" class="d-flex flex-column justify-content-center mb-4">
+
+      <!-- TOP: MAP -->
+      <div style="width: 100%" class="chart-container my-5">
+        <svg id="mapEurope"></svg>
+        <img height="350px" src="images/map_mockup.png" />
+      </div>
+
+      <!-- BOTTOM -->
+      <div class="d-flex justify-content-between">
+
+        <!-- RED LIST PLOT -->
+        <div style="width: 40%; height: fit-content;" class="chart-container my-5">
+          <svg id="red_list_plot"></svg>
+          <img style="width: 100%; height: 100%" src="images/red_list_mockup.png" />
+        </div>
+
+        <!-- SCATTERPLOT -->
+        <div style="width: 50%" class="chart-container my-5 ml-5 d-flex justify-content-between">
+          <svg id="scatterPlot"></svg>
+          <div style="width: 10%" class="d-flex flex-column">
+            <button id="btn-LC" class="btn btn-light button lc-bg-color" onclick="redListCatButton('LC')">
+              LC</button>
+            <button id="btn-NT" class="btn btn-light button nt-bg-color" onclick="redListCatButton('NT')">
+              NT</button>
+            <button id="btn-VU" class="btn btn-light button vu-bg-color" onclick="redListCatButton('VU')">
+              VU</button>
+            <button id="btn-EN" class="btn btn-light button en-bg-color" onclick="redListCatButton('EN')">
+              EN</button>
+            <button id="btn-CR" class="btn btn-light button cr-bg-color" onclick="redListCatButton('CR')">
+              CR</button>   
+          </div>
+
+        <!-- END Bottom Container -->
+        </div>
+    <!-- END -  left container -->
+    </div>
+
+    </div>  
+
+    <!-- Right Container -->
+    <div class="chart-container my-5">
+      <div id="dotMatrix"></div>
+    </div>
+
+  <!-- ---------------------------------- -->
+  <!-- Page Content End -->
   </div>
 
-  <div class="d-flex justify-content-around">
-    <div class="centering"><svg id="vi3"></svg></div>
-  </div>
-
-
-  </body>
+</div>
+</body>
 </html>
