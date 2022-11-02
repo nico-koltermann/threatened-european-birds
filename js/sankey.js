@@ -1,6 +1,6 @@
-function createSankeyDiagram(data, id) {
+function getGradID(d){return "linkGrad-" + d.source.name + d.target.name;}
 
-  console.log("sankey");
+function createSankeyDiagram(data, id) {
 
   // append the svg object to the body of the page
   let svg = d3.select(id)
@@ -8,92 +8,137 @@ function createSankeyDiagram(data, id) {
       .attr("width", width_sankey + margin_sankey.left + margin_sankey.right)
       .attr("height", height_sankey + margin_sankey.top + margin_sankey.bottom)
     .append("g")
-      .attr("transform", 
+       .attr("transform", 
             "translate(" + margin_sankey.left + "," + margin_sankey.top + ")");
 
-  // Set the sankey diagram properties
-  let sankey = d3.sankey()
-    .nodeWidth(36)
-    .nodePadding(40)
-    .size([width_sankey, height_sankey]);
+    // format variables
+    var formatNumber = d3.format(",.0f"), // zero decimal places
+      format = function(d) {
+        return formatNumber(d);
+      },
+      color = d3.scaleOrdinal(d3.schemeCategory10);
 
-  //set up graph in same style as original example but emptyUncaught (in promise) TypeError: d3.sankey is not a function
-  graph = {"nodes" : [], "links" : []};
+    // Set the sankey diagram properties
+    var sankey = d3
+      .sankey()
+      .nodeWidth(50)
+      .nodePadding(0)
+      .size([width_sankey, height_sankey]);
 
-  allRedListCats.forEach(rlc => {
-    graph.nodes.push({ "red_list_cat": rlc});
-    graph.nodes.push({ "red_list_cat": rlc });
-  })
+    d3.json("data/sankeyTest.json").then(function(sankeydata) {
+      graph = sankey(sankeydata);
 
-  data.forEach(function (d) {
-    graph.links.push({ "source": d.red_list_cat_prev,
-                       "target": d.red_list_cat_prev,
-                       "value": 1 });
-   });
+    // add in the links
+    var link = svg.append("g").selectAll(".link")
+        .data(graph.links)
+        .enter().append("path")
+        .attr("class", "link")
+        .attr("d", d3.sankeyLinkHorizontal())
+        .attr("stroke-width", function(d) { return d.width; })
+        .style("stroke", function(d) { return getColor(d.source.red_list_cat); }); 
 
-  // loop through each link replacing the text with its index from node
-  graph.links.forEach(function (d, i) {
-    graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
-    graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
-  });
+      // add the link titles
+      link.append("title").text(function(d) {
+        return d.source.red_list_cat + " → " + d.target.red_list_cat + "\n" + format(d.value);
+      });
 
-  // now loop through each nodes to make nodes an array of objects
-  // rather than an array of strings
-  graph.nodes.forEach(function (d, i) {
-    graph.nodes[i] = { "red_list_cat": d };
-  });
+    // link.append("linearGradient")
+    //   .attr("id", d => getGradID(d))
+    //   .attr("gradientUnits", "userSpaceOnUse")
+    //   .attr("x1", d => d.source.x1)
+    //   .attr("x2", d => d.target.x0)
+    //   .call(gradient => gradient.append("stop")
+    //       .attr("offset", "0%")
+    //       .attr("stop-color", ({source: {index: i}}) => "blue"))
+    //   .call(gradient => gradient.append("stop")
+    //       .attr("offset", "100%")
+    //       .attr("stop-color", ({target: {index: i}}) =>  "red"));
 
-  sankey
-    .nodes(graph.nodes);
-  sankey
-    .links(graph.links);
+    // link.style("stroke", function(d){
+    //   return "url(#" + getGradID(d) + ")";
+    // })
 
-  // add in the links
-  var link = svg.append("g").selectAll(".link")
-    .data(graph.links)
-  .enter().append("path")
-    .attr("class", "link")
-    .attr("d", d3.sankeyLinkHorizontal())
-    .style("stroke-width", function(d) { return Math.max(1, d.dy); })
-    .sort(function(a, b) { return b.dy - a.dy; });
+      // add in the nodes
+      var node = svg
+        .append("g")
+        .selectAll(".node")
+        .data(graph.nodes)
+        .enter()
+        .append("g")
+        .attr("class", "node")
+        .call(
+          d3
+            .drag()
+            .subject(function(d) {
+              return d;
+            })
+            .on("start", function() {
+              this.parentNode.appendChild(this);
+            })
+            .on("drag", dragmove)
+        );
 
-  // // add the link titles
-  // link.append("title")
-  //       .text(function(d) {
-  //   		return d.source.red_list_cat + " -> " + 
-  //               d.target.red_list_cat + "\n" + format(d.value); });
+      // add the rectangles for the nodes
+      node
+        .append("rect")
+        .attr("x", function(d) {
+          return d.x0;
+        })
+        .attr("y", function(d) {
+          return d.y0;
+        })
+        .attr("height", function(d) {
+          d.rectHeight = d.y1 - d.y0;
+          return d.y1 - d.y0;
+        })
+        .attr("width", sankey.nodeWidth())
+        .style("fill", function(d) {
+          return getColor(d.red_list_cat);
+        })
+        .attr("stroke", "#000")
+        .append("title")
+        .text(function(d) {
+          return d.red_list_cat + "\n" + format(d.value);
+        });
 
-  // add in the nodes
-  var node = svg.append("g").selectAll(".node")
-      .data(graph.nodes)
-    .enter().append("g")
-      .attr("class", "node")
-      .attr("transform", function(d) { 
-		  return "translate(" + d.x + "," + d.y + ")"; });
+      // add in the title for the nodes
+      node
+        .append("text")
+        .attr("x", function(d) {
+          return d.x0 + 15;
+        })
+        .attr("y", function(d) {
+          return (d.y1 + d.y0) / 2;
+        })
+        .attr("dy", "0.35em")
+        .text(function(d) {
+          return d.red_list_cat;
+        })
+        .filter(function(d) {
+          return d.x0 +20;
+        })
+        .attr("text-anchor", "start");
 
-  // add the rectangles for the nodes
-  node.append("rect")
-      .attr("height", function(d) { return d.dy; })
-      .attr("width", sankey.nodeWidth())
-      .style("fill", function(d) { 
-		  return d.color = "blue" })
-      .style("stroke", function(d) { 
-		  return d3.rgb(d.color).darker(2); })
-    .append("title")
-      .text(function(d) { 
-		  return d.red_list_cat + "\n" + d.value; });
+              // the function for moving the nodes
+      function dragmove(d) {
+        d3.select(this)
+          .select("rect")
+          .attr("y", function(n) {
+            n.y0 = Math.max(0, Math.min(n.y0 + d.dy, height_sankey - (n.y1 - n.y0)));
+            n.y1 = n.y0 + n.rectHeight;
+            return n.y0;
+          });
 
-  // add in the title for the nodes
-  node.append("text")
-      .attr("x", -6)
-      .attr("y", function(d) { return d.dy / 2; })
-      .attr("dy", ".35em")
-      .attr("text-anchor", "end")
-      .attr("transform", null)
-      .text(function(d) { return d.red_list_cat; })
-    .filter(function(d) { return d.x < width_sankey / 2; })
-      .attr("x", 6 + sankey.nodeWidth())
-      .attr("text-anchor", "start");
+        d3.select(this)
+          .select("text")
+          .attr("y", function(n) {
+            return (n.y0 + n.y1) / 2;
+          });
 
+        sankey.update(graph);
+        link.attr("d", d3.sankeyLinkHorizontal());
+      }
+    });
+     
 }
 
