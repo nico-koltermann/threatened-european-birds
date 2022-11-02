@@ -70,6 +70,6 @@ const zoomSymbolSizeDotMatrix = 250;
 // ---------        Sankey Plot      -----------
 // ---------------------------------------------
 
-const margin_sankey = {top: 10, right: 20, bottom: 10, left: 150};
-const width_sankey = 700 - margin_sankey.left - margin_sankey.right;
-const height_sankey = 1000 - margin_sankey.top - margin_sankey.bottom;
+const margin_sankey = {top: 10, right: 20, bottom: 10, left: 20};
+const width_sankey = 600 - margin_sankey.left - margin_sankey.right;
+const height_sankey = 600 - margin_sankey.top - margin_sankey.bottom;
