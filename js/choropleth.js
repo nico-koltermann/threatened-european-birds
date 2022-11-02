@@ -3,28 +3,26 @@ function createChoropleth(data, id) {
   width = 1000 - margin.left - margin.right;
   height = 700 - margin.top - margin.bottom;
 
-  svg = d3.select(id);
+  var svg = d3.select(id);
   svg.attr("width", width);
   svg.attr("height", height);
 
-  projection = d3.geoMercator();
+  var projection = d3.geoMercator();
 
-  d3.dsv(";", dataPath).then(function (loadData) {
-      topo = loadData;
-      svg
-          .append("g")
-          .selectAll("path")
-          .data(topojson.feature(topo, topo.objects.countries).features)
-          .join("path")
-          .attr("d", d3.geoPath().projection(projection))
-          .attr("fill", function (d) {
-              return d3.schemeReds[4];
-          });
+  svg
+    .append("g")
+    .selectAll("path")
+    .data(topojson.feature(topo, topo.objects.countries).features)
+    .join("path")
+    .attr("d", d3.geoPath().projection(projection))
+    .attr("fill", function (d) {
+        return d3.schemeReds[4];
+          
   });
 
-  world = FileAttachement("countries-50m.json").json();
+  var world = FileAttachement("countries-50m.json").json();
 
-  chart = Choropleth(data, {
+  var chart = Choropleth(data, {
       id: d => d.id,
       value: d => d.Risk_Country,
       range: d3.schemeReds[4],
@@ -53,7 +51,7 @@ function createChoropleth(data, id) {
   // Compute titles.
   if (title === undefined) {
     format = color.tickFormat(100, format);
-    title = (f, i) => '${ f.properties.name }\n${ format(V[i])};
+    title = (f, i) => `${ f.properties.name }\n${ format(V[i])};`
   } else if (title !== null) {
     const T = title;
     const O = d3.map(data, d => d);
