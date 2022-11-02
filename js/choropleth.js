@@ -1,70 +1,109 @@
-import { 
-  select,
-  geoPath,
-  geoNaturalEarth1,
-  zoom,
-  event,
-  scaleOrdinal,
-  schemeReds
-} from 'd3';
-
-import { loadAndProcessData } from './loadAndProcessData';
-import {colorLegend} from './colorLegend';
-
-
-
-function createChoropleth(dataPath) {
+function createChoropleth(data, id) {
   margin = { top: 20, right: 30, bottom: 40, left: 90 };
   width = 1000 - margin.left - margin.right;
   height = 700 - margin.top - margin.bottom;
 
-  const svg = select ('svg');
-  const projection = geoNaturalEarth1();
-  const pathGenerator = geoPath().projection(projection);
-  //Map Structure
-  const g = svg.append('g');
-  //Legend Structure (Translate refers to position in the screen - check backGroundRect for a box for the legend)
-  const colorLegendG = svg.append('g')
-      .attr('transform', `translate(30,300)`);
+  svg = d3.select(id);
+  svg.attr("width", width);
+  svg.attr("height", height);
 
-  g.append('path')  
-    .attr('class', 'sphere')  
-    .attr('d', pathGenerator({type: 'Sphere'}));
-  svg.call(zoom().on('zoom', () => {
-    g.attr('transform', event.transform);
-  }));
+  projection = d3.geoMercator();
 
-  // Color Scale from https://github.com/d3/d3-scale-chromatic
-  const colorScale = scaleOrdinal (schemeReds[4]);
-
-  //Simplificando..
-  const colorValue = d => d.properties.Risk_Country;
-
-  loadAndProcessData().then(countries => {
-    //1st domain - getting rid of the duplicates
-    //2nd domain - sorting the values
-    colorScale
-      .domain(countries.features.map (colorValue)) 
-      .domain(colorScale.domain().sort().reverse()); 
-      //.range(schemeReds[colorScale.domain().length]); - Can be used instead of the schemeReds[4]
-
-      //Decoration of Color Legend
-    colorLegendG.call(colorLegend, {
-      colorScale,
-      circleRadius:15, 
-      spacing: 40, 
-      textOffset:15
-    });
-
-    g.selectAll('path').data(countries.features)
-      .enter().append('path')
-        .attr('class', 'country')
-        .attr('d', pathGenerator)
-        .attr('fill', d => colorScale(colorValue(d)))
-      .append('title')
-        .text(d => d.properties.country + ': ' + colorVaue(d));
-
+  d3.dsv(";", dataPath).then(function (loadData) {
+      topo = loadData;
+      svg
+          .append("g")
+          .selectAll("path")
+          .data(topojson.feature(topo, topo.objects.countries).features)
+          .join("path")
+          .attr("d", d3.geoPath().projection(projection))
+          .attr("fill", function (d) {
+              return d3.schemeReds[4];
+          });
   });
-}
 
-    
+  world = FileAttachement("countries-50m.json").json();
+
+  chart = Choropleth(data, {
+      id: d => d.id,
+      value: d => d.Risk_Country,
+      range: d3.schemeReds[4],
+      features: countries,
+      featureId: d => d.properties.name,
+      borders: countrymesh,
+      domain: ['Few', 'Considerable', 'Alarming', 'High'],
+      range: d3.schemeReds[4],
+      //title: (f, d) => `${f.properties.name}, ${map.get(f.id.slice(0, 2)).properties.name}\n${d?.Risk_Country}%,
+  
+  });
+  
+  //Compute values.
+  const N = d3.map(data, id);
+  const V = d3.map(data, value).map(d => d == null ? NaN : +d);
+  const Im = new d3.InternMap(N.map((id, i) => [id, i]));
+  const If = d3.map(features.features, featureId);
+
+  //Compute default domains.
+  if (domain === undefined) domain = d3.extent(V);
+
+  // Construct scales.
+  const color = scale(domain, range);
+  if (color.unknown && unknown !== undefined) color.unknown(unknown);
+
+  // Compute titles.
+  if (title === undefined) {
+    format = color.tickFormat(100, format);
+    title = (f, i) => '${ f.properties.name }\n${ format(V[i])};
+  } else if (title !== null) {
+    const T = title;
+    const O = d3.map(data, d => d);
+    title = (f, i) => T(f, O[i]);
+  }
+
+  // Compute the default height. If an outline object is specified, scale the projection to fit
+  // the width, and then compute the corresponding height.
+  if (height === undefined) {
+    if (outline === undefined) {
+      height = 400;
+    } else {
+      const [[x0, y0], [x1, y1]] = d3.geoPath(projection.fitWidth(width, outline)).bounds(outline);
+      const dy = Math.ceil(y1 - y0), l = Math.min(Math.ceil(x1 - x0), dy);
+      projection.scale(projection.scale() * (l - 1) / l).precision(0.2);
+      height = dy;
+    }
+  }
+  // Construct a path generator.
+  const path = d3.geoPath(projection);
+
+  const svg = d3.create("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewBox", [0, 0, width, height])
+      .attr("style", "width: 100%; height: auto; height: intrinsic;");
+
+  if (outline != null) svg.append("path")
+      .attr("fill", fill)
+      .attr("stroke", "currentColor")
+      .attr("d", path(outline));
+
+  svg.append("g")
+    .selectAll("path")
+    .data(features.features)
+    .join("path")
+      .attr("fill", (d, i) => color(V[Im.get(If[i])]))
+      .attr("d", path)
+    .append("title")
+      .text((d, i) => title(d, Im.get(If[i])));
+
+  if (borders != null) svg.append("path")
+      .attr("pointer-events", "none")
+      .attr("fill", "none")
+      .attr("stroke", stroke)
+      .attr("stroke-linecap", strokeLinecap)
+      .attr("stroke-linejoin", strokeLinejoin)
+      .attr("stroke-width", strokeWidth)
+      .attr("stroke-opacity", strokeOpacity)
+      .attr("d", path(borders));
+
+  return Object.assign(svg.node(), {scales: {color}});
+}
