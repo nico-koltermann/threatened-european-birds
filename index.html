@@ -28,12 +28,14 @@
   <!-- Utils -->
   <script type="text/javascript" src="js/util/config.js"></script>
   <script type="text/javascript" src="js/util/helper.js"></script>
+  <script type="text/javascript" src="js/util/data-helper.js"></script>
   <script type="text/javascript" src="js/interactions.js"></script>
 
   <!-- Plot scripts-->
   <script type="text/javascript" src="js/scatter-plot.js"></script>
   <script type="text/javascript" src="js/dot-matrix.js"></script>
-  <!-- <script type="text/javascript" src="js/map.js"></script> -->
+  <script type="text/javascript" src="js/choropleth.js"></script>
+  <script type="text/javascript" src="js/map.js"></script>
   <script type="text/javascript" src="js/sankey.js"></script>
   <script type="text/javascript" src="js/script.js"></script>
   
@@ -63,12 +65,13 @@
     <div style="width: 62%" class="d-flex flex-column justify-content-between ml-5 mb-4">
 
       <!-- TOP: MAP -->
-      <div style="width: 100%" class="chart-container mt-5">
-        <svg id="choropleth"></svg>
+      <div style="width: 100%; height: 100%;" class="chart-container mt-5">
+        <!-- <svg id="ch  oropleth"></svg> -->
+        <div id="map"></div>
       </div>
 
       <!-- BOTTOM -->
-      <div style="height: 60%" class="d-flex justify-content-between align-items-end">
+      <div style="height: 50%" class="d-flex justify-content-between align-items-end">
 
         <!-- Sankey -->
         <div style="width: 50%; height: 90%;" class="chart-container my-5">

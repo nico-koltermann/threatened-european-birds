@@ -25,17 +25,26 @@ function createSankeyDiagram(data, id) {
       .nodePadding(0)
       .size([width_sankey, height_sankey]);
 
+
+    links = dataToNodesAndLinks(data);
+    nodes = getNodes();
+
     d3.json("data/sankeyTest.json").then(function(sankeydata) {
-      graph = sankey(sankeydata);
+      graph = sankey({ nodes, links });
 
     // add in the links
     var link = svg.append("g").selectAll(".link")
         .data(graph.links)
         .enter().append("path")
-        .attr("class", "link")
+        .attr("class", "link sankeyItem")
         .attr("d", d3.sankeyLinkHorizontal())
-        .attr("stroke-width", function(d) { return d.width; })
-        .style("stroke", function(d) { return getColor(d.source.red_list_cat); }); 
+        .attr("stroke-width", function(d) { 
+          sankeyWidthNormal = d.width;
+          return sankeyWidthNormal;
+        })
+        .style("stroke", function(d) { return getColor(d.source.red_list_cat); })
+        .on('mouseover', function(d) { handleMouseOver(d.originalTarget.__data__.species  ); })
+        .on('mouseleave', function(d) { handleMouseLeave(d.originalTarget.__data__.species  ); });
 
       // add the link titles
       link.append("title").text(function(d) {

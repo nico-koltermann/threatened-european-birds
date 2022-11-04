@@ -3,7 +3,8 @@
 // ---------------------------------------------
 
 // Load data path
-const dataPath = "data/merged_dataset01.11.csv";
+const dataPath = "data/birdsEUPopulation(Dataset1)25.10.csv";
+const geoJsonUrl = "data/geo.json";
 
 // TODO: Fix data
 // Same as in the css
@@ -23,7 +24,7 @@ let redListCatColorScale = {
   "Unknown ": "#808080"
 }
 
-allRedListCats = ['CR', 'EN', 'VU', 'NT', 'LC']
+allRedListCats = ['LC', 'NT', 'VU', 'EN', 'CR']
 
 const breedingColor = 'grey'
 const winteringColor = 'grey'
@@ -32,6 +33,7 @@ const winteringText = 'Wintering'
 
 // Class Names
 const scatterItem = "scatterItem"
+const sankeyItem = "sankeyItem"
 const dotMatrixItem = "dotMatrixItem"
 
 // Do the checks
@@ -47,6 +49,7 @@ const height_scatter = 500 - margin_scatter.top - margin_scatter.bottom;
 
 const scatterCircleSize = 4;
 const scatterZoomSize = 10;
+const scatterStrokeWidth = 5;
 
 // ---------------------------------------------
 // ---------         Dot Matrix      -----------
@@ -72,4 +75,9 @@ const zoomSymbolSizeDotMatrix = 250;
 
 const margin_sankey = {top: 10, right: 20, bottom: 10, left: 20};
 const width_sankey = 600 - margin_sankey.left - margin_sankey.right;
-const height_sankey = 600 - margin_sankey.top - margin_sankey.bottom;
+const height_sankey = 500 - margin_sankey.top - margin_sankey.bottom;
+
+const sankeyWidthHighlight = 10.0; 
+const sankeyHighlight = 1.0; 
+let sankeyWidthNormal = 1.0; 
+const sankeyNormal = 0.4; 

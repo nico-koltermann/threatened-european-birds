@@ -207,7 +207,7 @@ function createDotMatrix(input_data, id) {
 
   svg.selectAll(".dotMatrixDot")
     .on('mouseover', function(e, d) {
-      handleSingleMouseOver(d);
+      handleMouseOver(d);
       tooltip.select('.red_list').html('<b>Red List: <span class="tooltip-text">' + d.red_list_cat + '</span></b>');
       tooltip.select('.code').html('<b>Code: <span class="tooltip-text">' + d.speciescode + '</span></b>');
       tooltip.select('.name').html('<b>Name: <span class="tooltip-text">' + d.speciesname+ '</span></b>');

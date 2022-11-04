@@ -3,24 +3,22 @@ function createChoropleth(data, id) {
   width = 1000 - margin.left - margin.right;
   height = 700 - margin.top - margin.bottom;
 
-  svg = d3.select(id);
+  var svg = d3.select(id);
   svg.attr("width", width);
   svg.attr("height", height);
 
   projection = d3.geoMercator();
 
-  d3.dsv(";", dataPath).then(function (loadData) {
-      topo = loadData;
-      svg
-          .append("g")
-          .selectAll("path")
-          .data(topojson.feature(topo, topo.objects.countries).features)
-          .join("path")
-          .attr("d", d3.geoPath().projection(projection))
-          .attr("fill", function (d) {
-              return d3.schemeReds[4];
-          });
-  });
+    topo = data;
+    svg
+        .append("g")
+        .selectAll("path")
+        .data(topojson.feature(topo, topo.countries).features)
+        .join("path")
+        .attr("d", d3.geoPath().projection(projection))
+        .attr("fill", function (d) {
+            return d3.schemeReds[4];
+        });
 
   world = FileAttachement("countries-50m.json").json();
 
@@ -29,7 +27,7 @@ function createChoropleth(data, id) {
       value: d => d.Risk_Country,
       range: d3.schemeReds[4],
       features: countries,
-      featureId: d => d.properties.name,
+      featureId: function(d) { return d.properties.name },
       borders: countrymesh,
       domain: ['Few', 'Considerable', 'Alarming', 'High'],
       range: d3.schemeReds[4],
@@ -53,7 +51,7 @@ function createChoropleth(data, id) {
   // Compute titles.
   if (title === undefined) {
     format = color.tickFormat(100, format);
-    title = (f, i) => '${ f.properties.name }\n${ format(V[i])};
+    title = (f, i) => '${ f.properties.name }\n${ format(V[i])}';
   } else if (title !== null) {
     const T = title;
     const O = d3.map(data, d => d);
@@ -75,35 +73,35 @@ function createChoropleth(data, id) {
   // Construct a path generator.
   const path = d3.geoPath(projection);
 
-  const svg = d3.create("svg")
-      .attr("width", width)
-      .attr("height", height)
-      .attr("viewBox", [0, 0, width, height])
-      .attr("style", "width: 100%; height: auto; height: intrinsic;");
+  // const svg = d3.create("svg")
+  //     .attr("width", width)
+  //     .attr("height", height)
+  //     .attr("viewBox", [0, 0, width, height])
+  //     .attr("style", "width: 100%; height: auto; height: intrinsic;");
 
-  if (outline != null) svg.append("path")
-      .attr("fill", fill)
-      .attr("stroke", "currentColor")
-      .attr("d", path(outline));
+  // if (outline != null) svg.append("path")
+  //     .attr("fill", fill)
+  //     .attr("stroke", "currentColor")
+  //     .attr("d", path(outline));
 
-  svg.append("g")
-    .selectAll("path")
-    .data(features.features)
-    .join("path")
-      .attr("fill", (d, i) => color(V[Im.get(If[i])]))
-      .attr("d", path)
-    .append("title")
-      .text((d, i) => title(d, Im.get(If[i])));
+  // svg.append("g")
+  //   .selectAll("path")
+  //   .data(features.features)
+  //   .join("path")
+  //     .attr("fill", (d, i) => color(V[Im.get(If[i])]))
+  //     .attr("d", path)
+  //   .append("title")
+  //     .text((d, i) => title(d, Im.get(If[i])));
 
-  if (borders != null) svg.append("path")
-      .attr("pointer-events", "none")
-      .attr("fill", "none")
-      .attr("stroke", stroke)
-      .attr("stroke-linecap", strokeLinecap)
-      .attr("stroke-linejoin", strokeLinejoin)
-      .attr("stroke-width", strokeWidth)
-      .attr("stroke-opacity", strokeOpacity)
-      .attr("d", path(borders));
+  // if (borders != null) svg.append("path")
+  //     .attr("pointer-events", "none")
+  //     .attr("fill", "none")
+  //     .attr("stroke", stroke)
+  //     .attr("stroke-linecap", strokeLinecap)
+  //     .attr("stroke-linejoin", strokeLinejoin)
+  //     .attr("stroke-width", strokeWidth)
+  //     .attr("stroke-opacity", strokeOpacity)
+  //     .attr("d", path(borders));
 
-  return Object.assign(svg.node(), {scales: {color}});
+  // return Object.assign(svg.node(), {scales: {color}});
 }

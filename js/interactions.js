@@ -9,12 +9,29 @@ let ___filterStates___ = {
   Wintering: false
 }
 
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};
+
 function handleMouseOver(item) {
   d3.selectAll("." + scatterItem)
   .filter(function (d, i) {
     return d.speciescode == item.speciescode;
   })
-  .attr("r", scatterZoomSize);
+  .moveToFront()
+  .style('stroke', 'black')
+  .style('stroke-width', scatterStrokeWidth)
+  .attr('r', scatterZoomSize);
+
+  d3.selectAll("." + sankeyItem)
+  .filter(function (d, i) {
+    return d.species.speciescode == item.speciescode;
+  })
+  .style("stroke-width", sankeyWidthHighlight)
+  .style("stroke-opacity", sankeyHighlight);
+
   d3.selectAll("." + dotMatrixItem)
     .filter(function (d, i) {
       return d.speciescode == item.speciescode;
@@ -32,9 +49,14 @@ function handleSingleMouseOver(item) {
 
 function handleMouseLeave(item) {
   d3.selectAll("." + scatterItem)
+    .style('stroke', 'transparent')
+    .style('stroke-width', '0')
     .attr("r", scatterCircleSize);  
   d3.selectAll("." + dotMatrixItem)
-    .attr( "d", d3.symbol().size(symbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
+    .attr( "d", d3.symbol().size(symbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) );
+  d3.selectAll("." + sankeyItem)
+    .style("stroke-width", sankeyWidthNormal)
+    .style("stroke-opacity", sankeyNormal);
 }
 
 function redListCatButton(cat) {

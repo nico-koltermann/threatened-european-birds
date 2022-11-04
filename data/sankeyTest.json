@@ -17,7 +17,11 @@
         {"node":14, "red_list_cat":"CR"}
     ],
     "links":[
-        {"source":0,"target":5,"value":13},
+        {"source":0,"target":5,"value":2},
+        {"source":0,"target":5,"value":2},
+        {"source":0,"target":5,"value":2},
+        {"source":0,"target":5,"value":2},
+        {"source":0,"target":5,"value":2},
         {"source":0,"target":6,"value":10},
         {"source":1,"target":6,"value":27},
         {"source":2,"target":7,"value":5},
