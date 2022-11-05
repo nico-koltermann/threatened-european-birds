@@ -22,9 +22,6 @@ function dataToNodesAndLinks(data) {
       }
     });
 
-  console.log(data_2020);
-  console.log(links);
-
   return links;
 }
 

@@ -32,6 +32,12 @@ function createSankeyDiagram(data, id) {
     d3.json("data/sankeyTest.json").then(function(sankeydata) {
       graph = sankey({ nodes, links });
 
+    // create gradients for the links
+
+    function getLinkID(d){
+      return "link-" + d.source.red_list_cat + "-" + d.target.red_list_cat;
+    }
+
     // add in the links
     var link = svg.append("g").selectAll(".link")
         .data(graph.links)
@@ -42,32 +48,44 @@ function createSankeyDiagram(data, id) {
           sankeyWidthNormal = d.width;
           return sankeyWidthNormal;
         })
-        .style("stroke", function(d) { return getColor(d.source.red_list_cat); })
+        .style('stroke', function(d) {
+
+          if (d.source.red_list_cat === d.target.red_list_cat) {
+            return getColor(d.source.red_list_cat);
+          }
+
+          var sourceColor = getColor(d.source.red_list_cat.replace(/ .*/, "")).replace("#", "");
+          var targetColor = getColor(d.target.red_list_cat.replace(/ .*/, "")).replace("#", "");
+          var id = 'c-' + sourceColor + '-to-' + targetColor;
+            var gradient = svg.append('defs')
+              .append('linearGradient')
+              .attr('id', id)
+              .attr('x1', '0%')
+              .attr('y1', '0%')
+              .attr('x2', '100%')
+              .attr('y2', '0%')
+              .attr('spreadMethod', 'pad');
+
+            gradient.append('stop')
+              .attr('offset', '0%')
+              .attr('stop-color', "#" + sourceColor)
+              .attr('stop-opacity', 1);
+
+            gradient.append('stop')
+              .attr('offset', '100%')
+              .attr('stop-color', "#" + targetColor)
+              .attr('stop-opacity', 1);
+          return "url(#" + id + ")";
+        })
         .on('mouseover', function(d) { handleMouseOver(d.originalTarget.__data__.species  ); })
         .on('mouseleave', function(d) { handleMouseLeave(d.originalTarget.__data__.species  ); });
 
       // add the link titles
       link.append("title").text(function(d) {
-        return d.source.red_list_cat + " → " + d.target.red_list_cat + "\n" + format(d.value);
+        return d.source.red_list_cat + " -> " + d.target.red_list_cat;
       });
 
-    // link.append("linearGradient")
-    //   .attr("id", d => getGradID(d))
-    //   .attr("gradientUnits", "userSpaceOnUse")
-    //   .attr("x1", d => d.source.x1)
-    //   .attr("x2", d => d.target.x0)
-    //   .call(gradient => gradient.append("stop")
-    //       .attr("offset", "0%")
-    //       .attr("stop-color", ({source: {index: i}}) => "blue"))
-    //   .call(gradient => gradient.append("stop")
-    //       .attr("offset", "100%")
-    //       .attr("stop-color", ({target: {index: i}}) =>  "red"));
-
-    // link.style("stroke", function(d){
-    //   return "url(#" + getGradID(d) + ")";
-    // })
-
-      // add in the nodes
+     // add in the nodes
       var node = svg
         .append("g")
         .selectAll(".node")
@@ -84,7 +102,6 @@ function createSankeyDiagram(data, id) {
             .on("start", function() {
               this.parentNode.appendChild(this);
             })
-            .on("drag", dragmove)
         );
 
       // add the rectangles for the nodes
