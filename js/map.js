@@ -34,16 +34,24 @@ function createMap(data, id) {
 				if (!filter_cat.includes(col.red_list_cat)) {
 					if (country_count[col.country] == null) {
 						country_summary[col.country] = []
-						country_summary[col.country].push(col.speciescode)
+						country_summary[col.country].push(col)
 						country_count[col.country] = 1;
 					} else {
-						country_summary[col.country].push(col.speciescode)
+						country_summary[col.country].push(col)
 						country_count[col.country] += 1;
 					}
 				}
 			});
 
-			console.log(country_count);
+
+  var tooltip = d3.select(id)
+		.append('div')
+		.attr('class', 'tooltip');
+
+	tooltip.append('div')
+		.attr('class', 'tp-map-country');
+	tooltip.append('div')
+		.attr('class', 'tp-map-species');
 
 			svg.selectAll("path")
 				.data(geojson.features)
@@ -59,6 +67,13 @@ function createMap(data, id) {
 					return colorScale(d.total);
 				})
 				.on('mouseover', function (e, d) {
+					tooltip.select('.tp-map-country').html('<b>Country: <span class="tooltip-text">' + d.properties.name + '</span></b>');
+					tooltip.select('.tp-map-species').html('<b>Total: <span class="tooltip-text">' + d.total + '</span></b>');
+
+					tooltip.style('display', 'block');
+					tooltip.style('border', '6px solid ' + colorScale(d.total));
+					tooltip.style('opacity', 2);
+
 					d3.select(this)
 						.style('fill', function (d) {
 							d.total = country_count[d.properties.name] || 0;
@@ -66,7 +81,15 @@ function createMap(data, id) {
 						});
 					handleMapMouseOver(d);
 				})
+				.on('mousemove', function(e, d) {
+					tooltip
+						.style('top', (e.layerY + 30) + 'px')
+						.style('left', (e.layerX - 25) + 'px');
+				})
 				.on('mouseleave', function (e, d) {
+					tooltip.style('display', 'none');
+					tooltip.style('opacity',0);
+
 					d3.select(this)
 						.style('fill', function (d) {
 							d.total = country_count[d.properties.name] || 0;

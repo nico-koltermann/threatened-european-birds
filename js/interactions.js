@@ -22,7 +22,7 @@ function handleMouseOver(item) {
   })
   .moveToFront()
   .style('stroke', 'black')
-  .style('stroke-width', scatterStrokeWidth)
+  .style('stroke-width', dotStrokeWidth)
   .attr('r', scatterZoomSize);
 
   d3.selectAll("." + sankeyItem)
@@ -36,6 +36,9 @@ function handleMouseOver(item) {
     .filter(function (d, i) {
       return d.speciescode == item.speciescode;
     })
+    .moveToFront()
+    .style('stroke', 'black')
+    .style('stroke-width', dotStrokeWidth)
     .attr( "d", d3.symbol().size(zoomSymbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
 }
 
@@ -53,6 +56,8 @@ function handleMouseLeave(item) {
     .style('stroke-width', '0')
     .attr("r", scatterCircleSize);  
   d3.selectAll("." + dotMatrixItem)
+    .style('stroke', 'transparent')
+    .style('stroke-width', '0')
     .attr( "d", d3.symbol().size(symbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) );
   d3.selectAll("." + sankeyItem)
     .style("stroke-width", sankeyWidthNormal)
@@ -98,6 +103,9 @@ function onRedListButtonHover(cat) {
   .filter(function (d, i) {
     return d.red_list_cat == cat;
   })
+  .moveToFront()
+  .style('stroke', 'black')
+  .style('stroke-width', dotStrokeWidth)
   .attr("r", scatterZoomSize);
 }
 
@@ -106,6 +114,8 @@ function onRedListButtonLeave(cat) {
   .filter(function (d, i) {
     return d.red_list_cat == cat;
   })
+  .style('stroke', 'transparent')
+  .style('stroke-width', '0')
   .attr("r", scatterCircleSize);
 }
 
@@ -166,9 +176,8 @@ function winteringFilter(filter) {
 function handleMapMouseOver(item) {
   species = item.summary;
   if (species != undefined) {
-    species.forEach(code => {
-      item = { speciescode: code };
-      handleMouseOver(item);
+    species.forEach(specie => {
+      handleMouseOver(specie);
     });
   }
 }
@@ -176,9 +185,8 @@ function handleMapMouseOver(item) {
 function handleMapMouseLeave(item) {
   species = item.summary;
   if (species != undefined) {
-    species.forEach(code => {
-      item = { speciescode: code }
-      handleMouseLeave(item);
+    species.forEach(specie => {
+      handleMouseLeave(specie);
     });
   }
 }

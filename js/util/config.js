@@ -40,6 +40,8 @@ const dotMatrixItem = "dotMatrixItem"
 // Do the checks
 const grey = "rgb(176, 176, 176)";
 
+const dotStrokeWidth = 2;
+
 // ---------------------------------------------
 // ---------        Scatter Plot     -----------
 // ---------------------------------------------
@@ -50,7 +52,6 @@ const height_scatter = 500 - margin_scatter.top - margin_scatter.bottom;
 
 const scatterCircleSize = 4;
 const scatterZoomSize = 10;
-const scatterStrokeWidth = 5;
 
 // ---------------------------------------------
 // ---------         Dot Matrix      -----------
