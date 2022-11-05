@@ -162,3 +162,23 @@ function winteringFilter(filter) {
       .style("fill", function(d){ return grey; });
   }
 }
+
+function handleMapMouseOver(item) {
+  species = item.summary;
+  if (species != undefined) {
+    species.forEach(code => {
+      item = { speciescode: code }
+      handleMouseOver(item);
+    });
+  }
+}
+
+function handleMapMouseLeave(item) {
+  species = item.summary;
+  if (species != undefined) {
+    species.forEach(code => {
+      item = { speciescode: code }
+      handleMouseLeave(item);
+    });
+  }
+}

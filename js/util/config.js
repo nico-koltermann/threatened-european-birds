@@ -5,6 +5,7 @@
 // Load data path
 const dataPath = "data/birdsEUPopulation(Dataset1)25.10.csv";
 const geoJsonUrl = "data/geo.json";
+const geoDataPath = "data/merged_dataset01.11.csv";
 
 // TODO: Fix data
 // Same as in the css
