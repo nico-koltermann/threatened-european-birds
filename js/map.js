@@ -18,6 +18,11 @@ function createMap(data, id) {
 		.domain([0, 1,  5, 10, 15])
 		.range(['#abb2b9', '#abb2b9', '#f4d03f', '#f5b041', '#e74c3c', '#7b241c']);
 
+	
+	var colorScaleHover = d3.scaleThreshold()
+		.domain([0, 1,  5, 10, 15])
+		.range(['#abb2b9', '#eaecee', '#f9e79f', '#f8c471', '#f1948a', '#922b21']);
+
 	d3.json(geoJsonUrl).then(geojson => {
 		
 		let country_count = { };
@@ -44,6 +49,7 @@ function createMap(data, id) {
 				.data(geojson.features)
 				.enter()
 				.append("path")
+				.attr('class', 'country-path')
 				.attr("d", pathGenerator) // This is where the magic happens
 				.attr("stroke", "grey") // Color of the lines themselves
 				.attr("fill", "white") // Color uses to fill in the lines
@@ -53,9 +59,19 @@ function createMap(data, id) {
 					return colorScale(d.total);
 				})
 				.on('mouseover', function (e, d) {
+					d3.select(this)
+						.style('fill', function (d) {
+							d.total = country_count[d.properties.name] || 0;
+							return colorScaleHover(d.total);
+						});
 					handleMapMouseOver(d);
 				})
 				.on('mouseleave', function (e, d) {
+					d3.select(this)
+						.style('fill', function (d) {
+							d.total = country_count[d.properties.name] || 0;
+							return colorScale(d.total);
+						});
 					handleMapMouseLeave(d);
 				});
 		});
