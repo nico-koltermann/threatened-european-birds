@@ -15,8 +15,8 @@ function createMap(data, id) {
   pathGenerator = d3.geoPath().projection(europeProjection);
 
 	var colorScale = d3.scaleThreshold()
-		.domain([null, 0, 5, 10, 15, 20])
-		.range(['#d5d8dc', '#d5d8dc', '#f4d03f', '#f5b041', '#e74c3c', '#7b241c' ]);
+		.domain([0, 1,  5, 10, 15])
+		.range(['#abb2b9', '#abb2b9', '#f4d03f', '#f5b041', '#e74c3c', '#7b241c']);
 
 	d3.json(geoJsonUrl).then(geojson => {
 		

@@ -167,7 +167,7 @@ function handleMapMouseOver(item) {
   species = item.summary;
   if (species != undefined) {
     species.forEach(code => {
-      item = { speciescode: code }
+      item = { speciescode: code };
       handleMouseOver(item);
     });
   }
