@@ -9,14 +9,6 @@ let ___filterStates___ = {
   Wintering: false
 }
 
-let ___mapFilterStates___ = {
-  c125: false,
-  c6210: false,
-  c11215: false,
-  c16220: false,
-  unknown: false,
-}
-
 d3.selection.prototype.moveToFront = function() {
   return this.each(function(){
     this.parentNode.appendChild(this);
@@ -199,39 +191,3 @@ function handleMapMouseLeave(item) {
   }
 }
 
-// Implementing function mapbutton for clicking interactivity in choropleth 
-
-/*
-function mapButton(cat) {
-
-  mapbtn = document.getElementById('btn-' + cat);
-
-  if (mapbtn.style.background == grey) {
-    ___mapFilterStates___[cat] = false;
-    mapbtn.style.background = getColor(cat);
-    d3.selectAll("." + "country-path")
-      .filter(function (d, i) {
-        return d.red_list_cat.includes(cat);
-      })
-      .style("fill", function(d){ return getColor(d.red_list_cat); });
-    d3.selectAll("." + dotMatrixItem)
-      .filter(function (d, i) {
-        return d.red_list_cat.includes(cat);
-      })
-      .style("fill", function(d){ return getColor(d.red_list_cat); });
-  } else {
-    ___filterStates___[cat] = true;
-    btn.style.background = grey;
-    d3.selectAll("." + countryItem)
-      .filter(function (d, i) {
-        return d.red_list_cat.includes(cat);
-      })
-      .style("fill", function(d){ return grey; });
-    d3.selectAll("." + dotMatrixItem)
-      .filter(function (d, i) {
-        return d.red_list_cat.includes(cat);
-      })
-      .style("fill", function(d){ return grey; }); 
-  }
-}
-*/

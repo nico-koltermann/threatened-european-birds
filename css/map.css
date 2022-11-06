@@ -22,11 +22,19 @@ path:hover {
   border: 1px solid black;
   margin: 0.25rem;
   white-space: nowrap;
-	margin-right: 2.2rem;
+	margin-right: 1rem;
+	display: flex;
 }
 
 .map-text {
 	margin-top: 0.25rem;
   font-family: "Flaviotte";
   color: black;
+}
+
+div ul {
+	text-align: center;
+	justify-content:center;
+	padding: .3rem 1.3rem;
+
 }
