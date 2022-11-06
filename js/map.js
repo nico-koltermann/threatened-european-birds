@@ -57,7 +57,7 @@ function createMap(data, id) {
 				.data(geojson.features)
 				.enter()
 				.append("path")
-				.attr("class", "country-path")
+				.attr("class", "countryItem" + countryItem)
 				.attr("d", pathGenerator) // This is where the magic happens
 				.attr("stroke", "grey") // Color of the lines themselves
 				.attr("fill", "white") // Color uses to fill in the lines

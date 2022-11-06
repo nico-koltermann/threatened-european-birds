@@ -36,6 +36,7 @@ const winteringText = 'Wintering'
 const scatterItem = "scatterItem"
 const sankeyItem = "sankeyItem"
 const dotMatrixItem = "dotMatrixItem"
+const countryItem = "countryItem"
 
 // Do the checks
 const grey = "rgb(176, 176, 176)";
