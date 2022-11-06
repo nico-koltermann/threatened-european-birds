@@ -65,9 +65,36 @@
     <div style="width: 62%" class="d-flex flex-column justify-content-between ml-5 mb-4">
 
       <!-- TOP: MAP -->
-      <div style="width: 100%; height: 100%;" class="chart-container mt-5">
-        <!-- <svg id="ch  oropleth"></svg> -->
+      <div style="width: 100%; height: 100%;" class="chart-container mt-5 map-text">
+        <h1>Number of Threatened Birds per Country</h1>
         <div id="map"></div>
+        <div style="width: 10%" class="d-flex flex-line">
+          <button id="btn-unknown" class="btn btn-light map-button unknown-bg-color" 
+          onclick="mapButton('Unknown')" 
+          onmouseover="onRedListButtonHover('Unknown')" 
+          onmouseleave="onRedListButtonLeave('Unknown')">
+            Unknown</button>
+          <button id="btn-125" class="btn btn-light map-button c125-bg-color" 
+          onclick="mapButton('c125')"
+          onmouseover="onRedListButtonHover('c125')" 
+          onmouseleave="onRedListButtonLeave('c125')">
+            From 1 to 5</button>
+          <button id="btn-6210" class="btn btn-light map-button c6210-bg-color" 
+          onclick="mapButton('c6210')"
+          onmouseover="onRedListButtonHover('c6210')" 
+          onmouseleave="onRedListButtonLeave('c6210')">
+            From 6 to 10</button>
+          <button id="btn-11215" class="btn btn-light map-button c11215-bg-color" 
+          onclick="mapButton('c11215')"
+          onmouseover="onRedListButtonHover('c11215')" 
+          onmouseleave="onRedListButtonLeave('c11215')">
+            From 11 to 15</button>
+          <button id="btn-16220" class="btn btn-light map-button c16220-bg-color" 
+          onclick="mapButton('16220')"
+          onmouseover="onRedListButtonHover('16220')" 
+          onmouseleave="onRedListButtonLeave('16220')">
+            From 16 to 20</button>   
+        </div>
       </div>
 
       <!-- BOTTOM -->
