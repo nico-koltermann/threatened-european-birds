@@ -61,7 +61,7 @@ function createScatterPlot(data, id) {
     .attr("cx", (d) => x(d.distribution_surface_area))
     .attr("cy", (d) => y(d.population_maximum_size))
     .attr("r", scatterCircleSize)
-    .attr("fill", function(d){return evalColor(d  ) })
+    .attr("fill", function(d){return getColor(d.red_list_cat) })
     .on("mouseover", (event, d) => handleMouseOver(d))
     .on("mouseleave", (event, d) => handleMouseLeave())
     .append("speciesname")
@@ -158,12 +158,4 @@ function createQuartileLines() {
   });
 
 }
-
-function updateScatterPlot(id, dataPath) {
-  
-
-  
-}
-
-
   

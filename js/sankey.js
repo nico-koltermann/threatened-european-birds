@@ -25,7 +25,6 @@ function createSankeyDiagram(data, id) {
       .nodePadding(0)
       .size([width_sankey, height_sankey]);
 
-
     links = dataToNodesAndLinks(data);
     nodes = getNodes(data);
 
@@ -33,11 +32,7 @@ function createSankeyDiagram(data, id) {
       graph = sankey({ nodes, links });
 
     // create gradients for the links
-
-    function getLinkID(d){
-      return "link-" + d.source.red_list_cat + "-" + d.target.red_list_cat;
-    }
-
+    
     // add in the links
     var link = svg.append("g").selectAll(".link")
         .data(graph.links)
@@ -47,6 +42,9 @@ function createSankeyDiagram(data, id) {
         .attr("stroke-width", function(d) { 
           sankeyWidthNormal = d.width;
           return sankeyWidthNormal;
+        })
+        .attr("stroke-opacity", function(d) { 
+          return sankeyNormal;
         })
         .style('stroke', function(d) {
 
@@ -92,21 +90,12 @@ function createSankeyDiagram(data, id) {
         .data(graph.nodes)
         .enter()
         .append("g")
-        .attr("class", "node")
-        .call(
-          d3
-            .drag()
-            .subject(function(d) {
-              return d;
-            })
-            .on("start", function() {
-              this.parentNode.appendChild(this);
-            })
-        );
+        .attr("class", "node");
 
       // add the rectangles for the nodes
       node
         .append("rect")
+        .attr("class", "" + sankeyNode)
         .attr("x", function(d) {
           return d.x0;
         })
@@ -130,6 +119,7 @@ function createSankeyDiagram(data, id) {
       // add in the title for the nodes
       node
         .append("text")
+        .attr("class", "" + sankeyNode)
         .attr("x", function(d) {
           let mult = 0.85;
           if (d.index < 5) {

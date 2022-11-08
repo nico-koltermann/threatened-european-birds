@@ -22,11 +22,6 @@ function dataToNodesAndLinks(data) {
 }
 
 function getNodes(data) {
-  // {"node":1, "red_list_cat":"NT"},
-  // {"node":0, "red_list_cat":"LC"},
-    // {"node":2, "red_list_cat":"VU"},
-    // {"node":3, "red_list_cat":"EN"},
-    // {"node":4, "red_list_cat":"CR"},
     
     data_2020 = { 'CR': 0, 'EN': 0, 'VU': 0, 'NT': 0, 'LC': 0 }
     data_2015 = { 'CR': 0, 'EN': 0, 'VU': 0, 'NT': 0, 'LC': 0 }
@@ -54,7 +49,7 @@ function getNodes(data) {
   return nodes;
 }
 
-function getFilteredData(___filterStates___) {
+function applyFilter(___filterStates___) {
 
   d3.dsv(";", dataPath).then( function(data) {
 

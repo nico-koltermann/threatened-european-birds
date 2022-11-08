@@ -37,6 +37,7 @@ const scatterItem = "scatterItem"
 const sankeyItem = "sankeyItem"
 const dotMatrixItem = "dotMatrixItem"
 const countryItem = "countryItem"
+const sankeyNode = "sankeyNode"
 
 // Do the checks
 const grey = "rgb(176, 176, 176)";
@@ -81,6 +82,6 @@ const width_sankey = 900 - margin_sankey.left - margin_sankey.right;
 const height_sankey = 250 - margin_sankey.top - margin_sankey.bottom;
 
 const sankeyWidthHighlight = 10.0; 
-const sankeyHighlight = 1.0; 
 let sankeyWidthNormal = 1.0; 
-const sankeyNormal = 0.4; 
+const sankeyHighlight = 2.0; 
+const sankeyNormal = 0.8; 
