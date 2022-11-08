@@ -37,6 +37,7 @@ const scatterItem = "scatterItem"
 const sankeyItem = "sankeyItem"
 const dotMatrixItem = "dotMatrixItem"
 const countryItem = "countryItem"
+const countryDot = "countryDot"
 const sankeyNode = "sankeyNode"
 
 // Do the checks

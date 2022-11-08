@@ -1,4 +1,4 @@
-﻿speciescode;speciesname;keywintering;distribution_surface_area;population_minimum_size;population_maximum_size;red_list_cat;red_list_cat_prev;taxFamily_en
+speciescode;speciesname;keywintering;distribution_surface_area;population_minimum_size;population_maximum_size;red_list_cat;red_list_cat_prev;taxFamily_en
 A001;Gavia stellata;N;392000;3000;4800;LC;LC;Loons/divers
 A002;Gavia arctica;N;634000;14800;19500;LC;LC;Loons/divers
 A003;Gavia immer;Y;-1;6900;7700;LC;VU;Loons/divers
@@ -37,7 +37,6 @@ A040-B;Anser brachyrhynchus;Y;-1;510000;511000;LC;LC;Ducks, geese and swans
 A041;Anser albifrons;Y;-1;1570000;2350000;LC;LC;Ducks, geese and swans
 A042;Anser erythropus;N;2500;15;30;CR;CR;Ducks, geese and swans
 A043;Anser anser;N;817000;223000;321000;LC;LC;Ducks, geese and swans
-A044-X;Branta canadensis;N;789000;91300;109000;EN;EN;Ducks, geese and swans
 A045;Branta leucopsis;N;91800;29700;38900;LC;LC;Ducks, geese and swans
 A046;Branta bernicla;Y;-1;298000;337000;LC;LC;Ducks, geese and swans
 A048;Tadorna tadorna;N;460000;34300;45800;LC;LC;Ducks, geese and swans
@@ -374,7 +373,6 @@ A455;Columba trocaz;N;1300;10000;14000;LC;LC;Pigeons and doves
 A456;Surnia ulula;N;336000;1400;21200;LC;LC;Typical owls
 A457;Strix nebulosa;N;219000;690;1600;LC;LC;Typical owls
 A459;Larus cachinnans;N;9000;5600;9600;LC;LC;Gulls and terns
-A460-X;Meleagris gallopavo;N;-1;;;EN;EN;Pheasants, partridges and grouse
 A461;Lagopus lagopus lagopus;N;365000;108000;495000;NT;EN;Pheasants, partridges and grouse
 A463;Lagopus lagopus hibernica;N;17100;1900;2400;VU;VU;Pheasants, partridges and grouse
 A464;Puffinus yelkouan;N;63900;23500;40400;VU;LC;Petrels and shearwaters

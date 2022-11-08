@@ -3,7 +3,6 @@ function init() {
     createDotMatrix(data, "#dotMatrix");
     createScatterPlot(data, "#scatterPlot");
     createSankeyDiagram(data, '#sankey');
-    createMap(data, '#map');
-    // createChoropleth(data, "#choropleth");
+    createMap(data, '#map', [], true, true);
   });
 }

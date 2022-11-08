@@ -137,7 +137,7 @@ function createSankeyDiagram(data, id) {
         })
         .attr("dy", "0.35em")
         .text(function(d) {
-          return d.red_list_cat + " - " + Math.round(d.percent) + "%";
+          return d.red_list_cat + " : " + Math.round(d.percent) + "%";
         })
         .attr('fill', function(d) {
           return getColor(d.red_list_cat);

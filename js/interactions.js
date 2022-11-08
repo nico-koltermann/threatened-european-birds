@@ -32,6 +32,20 @@ function handleMouseOver(item) {
   .style("stroke-width", sankeyWidthHighlight)
   .style("stroke-opacity", sankeyHighlight);
 
+  d3.selectAll("." + countryDot)
+  .filter(function (d, i) {
+    let result = d.alldata[d.properties.name];
+    if (result != undefined) {
+      result = result.map(a => a.speciescode);
+      return result.includes(item.speciescode);
+    } else {
+      return false;
+    }
+  })
+  .moveToFront()
+  .style("fill", getColor(item.red_list_cat))
+  .style("opacity", "1.0");
+
   d3.selectAll("." + dotMatrixItem)
     .filter(function (d, i) {
       return d.speciescode == item.speciescode;
@@ -62,6 +76,8 @@ function handleMouseLeave(item) {
   d3.selectAll("." + sankeyItem)
     .style("stroke-width", sankeyWidthNormal)
     .style("stroke-opacity", sankeyNormal);
+  d3.selectAll("." + countryDot)
+      .style("opacity", "0.0");
 }
 
 function WBFilter(d) {
@@ -86,11 +102,6 @@ function redListCatButton(cat) {
         return d.red_list_cat.includes(cat) && !WBFilter(d);
       })
       .style("fill", function(d){ return getColor(d.red_list_cat); });
-    d3.selectAll("." + countryItem)
-      .filter(function (d, i) {
-        return d.country_count.includes(cat) && !WBFilter(d);
-      })
-      .style("fill", function(d){ return getColor(d.red_list_cat); });
     d3.selectAll('.' + sankeyNode)
       .filter(function (d, i) {
         return d.red_list_cat.includes(cat) && !WBFilter(d);
@@ -98,7 +109,6 @@ function redListCatButton(cat) {
       .style("fill", function(d){ return getColor(d.red_list_cat); });
     d3.selectAll('.' + sankeyItem)
       .filter(function (d, i) {
-        console.log(d);
         return d.species.red_list_cat.includes(cat) && !WBFilter(d);
       })
       .style('stroke', function(d) {
@@ -146,11 +156,6 @@ function redListCatButton(cat) {
         return d.red_list_cat.includes(cat) && !WBFilter(d);
       })
       .style("fill", function(d){ return grey; });
-     d3.selectAll("." + countryItem)
-      .filter(function (d, i) {
-        return d.country_count.includes(cat) && !WBFilter(d);
-      })
-      .style("fill", function(d){ return grey; });
     d3.selectAll('.' + sankeyNode)
       .filter(function (d, i) {
         return d.red_list_cat.includes(cat) && !WBFilter(d);
@@ -162,6 +167,16 @@ function redListCatButton(cat) {
       })
       .style("stroke", function(d){ return grey; });
   }
+
+  let catsFilter = [];
+  if (___filterStates___['VU']) catsFilter.push('VU');
+  if (___filterStates___['EN']) catsFilter.push('EN');
+  if (___filterStates___['CR']) catsFilter.push('CR');
+
+  if (cat !== 'NT' && cat !== 'LC'){
+    createMap(data, '#map', catsFilter, !___filterStates___['Wintering'], !___filterStates___['Breeding']);
+  }
+
   createQuartileLines();
 }
 
@@ -231,7 +246,6 @@ function winteringFilter(filter) {
     })
     d3.selectAll('.' + sankeyItem)
     .filter(function (d, i) {
-      console.log(d);
       return d.species.keywintering == filterMatch[filter] && !___filterStates___[d.red_list_cat];
     })
     .style('stroke', function(d) {
@@ -284,13 +298,46 @@ function winteringFilter(filter) {
       })
       .style("stroke", function(d){ return grey; });
   }
+  
+  let catsFilter = [];
+  if (___filterStates___['VU']) catsFilter.push('VU');
+  if (___filterStates___['EN']) catsFilter.push('EN');
+  if (___filterStates___['CR']) catsFilter.push('CR');
+
+  createMap(data, '#map', catsFilter, !___filterStates___['Wintering'], !___filterStates___['Breeding']);
+
 }
 
 function handleMapMouseOver(item) {
   species = item.summary;
   if (species != undefined) {
     species.forEach(specie => {
-      handleMouseOver(specie);
+
+      d3.selectAll("." + scatterItem)
+      .filter(function (d, i) {
+        return d.speciescode == specie.speciescode;
+      })
+      .moveToFront()
+      .style('stroke', 'black')
+      .style('stroke-width', dotStrokeWidth)
+      .attr('r', scatterZoomSize);
+    
+      d3.selectAll("." + sankeyItem)
+      .filter(function (d, i) {
+        return d.species.speciescode == specie.speciescode;
+      })
+      .style("stroke-width", sankeyWidthHighlight)
+      .style("stroke-opacity", sankeyHighlight);
+    
+      d3.selectAll("." + dotMatrixItem)
+        .filter(function (d, i) {
+          return d.speciescode == specie.speciescode;
+        })
+        .moveToFront()
+        .style('stroke', 'black')
+        .style('stroke-width', dotStrokeWidth)
+        .attr( "d", d3.symbol().size(zoomSymbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
+
     });
   }
 }
