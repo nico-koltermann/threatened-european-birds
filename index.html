@@ -46,7 +46,7 @@
   <!-- Static Header -->
   <div class="headline d-flex justify-content-around align-items-center">
     <div class="headline-text">
-      <h1>European Birds</h1>
+      <h1> Threatend European Birds</h1>
     </div>
     <div class="d-flex justify-content-around">
       <div class="category-div lc-color">LC - Least Concern</div>
@@ -63,35 +63,28 @@
 
     <!-- Left Container -->
     <div style="width: 62%" class="d-flex flex-column justify-content-between ml-5 mb-4">
-
-      <!-- TOP: MAP -->
-      <div style="width: 100%; height: 100%;" class="chart-container mt-5 map-text">
-        <h1>Number of Threatened Birds per Country</h1>
-        <div id="map"></div>
-        <div class="d-flex">
-          <ul class="map-button unknown-bg-color" 
-          >Unknown</ul>
-          <ul class="map-button c125-bg-color" 
-          >From 1 to 5</ul>
-          <ul class="map-button c6210-bg-color" 
-          >From 6 to 10</ul>
-          <ul class="map-button c11215-bg-color" 
-          >From 11 to 15</ul>
-          <ul class="map-button c16220-bg-color" 
-          >From 16 to 20</ul>   
-        </div>
-      </div>
-
-      <!-- BOTTOM -->
-      <div style="height: 50%" class="d-flex justify-content-between align-items-end">
-
-        <!-- Sankey -->
-        <div style="width: 50%; height: 90%;" class="chart-container my-5">
-          <div id="sankey"></div>
+      
+      <!-- TOP -->
+      <div style="height: 58%;" class="d-flex flex-row justify-content-between">
+        <!-- TOP: MAP -->
+        <div style="width: 55%; height: 100%;" class="chart-container mt-3 map-text">
+          <h1>Number of Threatened Birds per Country</h1>
+          <div id="map"></div>
+          <div class="d-flex">
+            <ul class="map-button unknown-bg-color" 
+            >Unknown</ul>
+            <ul class="map-button c125-bg-color" 
+            >From 1 to 5</ul>
+            <ul class="map-button c6210-bg-color" 
+            >From 6 to 10</ul>
+            <ul class="map-button c11215-bg-color" 
+            >From 11 to 15</ul>
+            <ul class="map-button c16220-bg-color" 
+            >From 16 to 20</ul>   
+          </div>
         </div>
 
-        <!-- SCATTERPLOT -->
-        <div style="width: 45%; height: 90%" class="chart-container mb-5 ml-5 d-flex justify-content-between align-items-center">
+        <div style="width: 40%; height: 100%" class="chart-container my-3 ml-5 d-flex justify-content-between align-items-center">
           <svg id="scatterPlot"></svg>
           <div style="width: 10%" class="d-flex flex-column">
             <button id="btn-LC" class="btn btn-light button lc-bg-color" 
@@ -119,20 +112,32 @@
             onmouseover="onRedListButtonHover('CR ')" 
             onmouseleave="onRedListButtonLeave('CR ')">
               CR</button>   
+            </div>
           </div>
+      </div>
 
-        <!-- END Bottom Container -->
+
+      <!-- BOTTOM -->
+      <div style="height: 40%" class="d-flex justify-content-between align-items-end">
+
+        <!-- Sankey -->
+        <div style="width: 100%; height: 90%;" class="chart-container mb-5 d-flex justify-content-center  ">
+          <div id="sankey"></div>
         </div>
-    <!-- END -  left container -->
-    </div>
 
+        <!-- SCATTERPLOT -->
+
+    <!-- END Bottom Container -->
+  </div>
+  
+  <!-- END -  left container -->
     </div>  
 
     <!-- Right Container -->
-    <div class="d-flex flex-column justify-content-center mb-4">
-    <div class="chart-container my-5">
-      <div id="dotMatrix"></div>
-    </div>
+    <div style="height: 100%" class="d-flex flex-column justify-content-center my-3">
+      <div style="height: 100%" class="chart-container">
+        <div id="dotMatrix"></div>
+      </div>
     </div>
 
   <!-- ---------------------------------- -->

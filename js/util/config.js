@@ -49,7 +49,7 @@ const dotStrokeWidth = 2;
 
 const margin_scatter = { top: 30, right: 100, bottom: 80, left: 100 };
 const width_scatter = 600 - margin_scatter.left - margin_scatter.right;
-const height_scatter = 500 - margin_scatter.top - margin_scatter.bottom;
+const height_scatter = 600 - margin_scatter.top - margin_scatter.bottom;
 
 const scatterCircleSize = 4;
 const scatterZoomSize = 10;
@@ -59,8 +59,8 @@ const scatterZoomSize = 10;
 // ---------------------------------------------
 
 const margin_dotMatrix = {top: 10, right: 20, bottom: 10, left: 150};
-const width_dotMatrix = 700 - margin_dotMatrix.left - margin_dotMatrix.right;
-const height_dotMatrix = 1000 - margin_dotMatrix.top - margin_dotMatrix.bottom;
+const width_dotMatrix = 800 - margin_dotMatrix.left - margin_dotMatrix.right;
+const height_dotMatrix = 1100 - margin_dotMatrix.top - margin_dotMatrix.bottom;
 
 const distanceToYAxis = 10;
 
@@ -77,8 +77,8 @@ const zoomSymbolSizeDotMatrix = 250;
 // ---------------------------------------------
 
 const margin_sankey = {top: 10, right: 20, bottom: 10, left: 20};
-const width_sankey = 600 - margin_sankey.left - margin_sankey.right;
-const height_sankey = 500 - margin_sankey.top - margin_sankey.bottom;
+const width_sankey = 1000 - margin_sankey.left - margin_sankey.right;
+const height_sankey = 400 - margin_sankey.top - margin_sankey.bottom;
 
 const sankeyWidthHighlight = 10.0; 
 const sankeyHighlight = 1.0; 
