@@ -28,7 +28,7 @@ path:hover {
 
 .map-text {
 	margin-top: 0.25rem;
-  font-family: "Flaviotte";
+  /* font-family: "Flaviotte"; */
   color: black;
 }
 
@@ -36,5 +36,4 @@ div ul {
 	text-align: center;
 	justify-content:center;
 	padding: .3rem 1.3rem;
-
 }

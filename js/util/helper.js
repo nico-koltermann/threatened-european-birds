@@ -8,6 +8,15 @@ function getColor(red_list_cat) {
   }
 }
 
+function evalColor(species) {
+  if ( !species.showData ){
+    return getColor(species.red_list_cat);
+  }
+  else {
+    return "grey";
+  }
+}
+
 function getSymbol(d) {
   if (d.keywintering == 'N') {
     return d3.symbols[0]; 

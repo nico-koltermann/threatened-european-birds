@@ -6,5 +6,4 @@ function init() {
     createMap(data, '#map');
     // createChoropleth(data, "#choropleth");
   });
-
 }

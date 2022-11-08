@@ -1,6 +1,6 @@
 function createMap(data, id) {
 
-	let width = 800, height = 600;
+	let width = 500, height = 350;
 
 	let europeProjection = d3.geoMercator()
 			.center([ 13, 52 ])

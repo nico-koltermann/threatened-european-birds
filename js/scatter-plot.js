@@ -18,7 +18,7 @@ function createScatterPlot(data, id) {
     .attr("id", "gXAxis")
     .attr("transform", `translate(0, ${height_scatter + margin_scatter.top})`)
     .call(d3.axisBottom(x)
-      .ticks(6)
+      .ticks(4)
       .tickFormat((x) => x)
     );
 
@@ -34,7 +34,7 @@ function createScatterPlot(data, id) {
   svg
     .append("g")
     .call(d3.axisLeft(y)
-      .ticks(5)
+      .ticks(4)
       .tickFormat((x) => x)
     )
     .attr("id", "gYAxis");
@@ -61,7 +61,7 @@ function createScatterPlot(data, id) {
     .attr("cx", (d) => x(d.distribution_surface_area))
     .attr("cy", (d) => y(d.population_maximum_size))
     .attr("r", scatterCircleSize)
-    .attr("fill", function(d){return getColor(d.red_list_cat) })
+    .attr("fill", function(d){return evalColor(d  ) })
     .on("mouseover", (event, d) => handleMouseOver(d))
     .on("mouseleave", (event, d) => handleMouseLeave())
     .append("speciesname")

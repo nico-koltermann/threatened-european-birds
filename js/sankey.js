@@ -27,7 +27,7 @@ function createSankeyDiagram(data, id) {
 
 
     links = dataToNodesAndLinks(data);
-    nodes = getNodes();
+    nodes = getNodes(data);
 
     d3.json("data/sankeyTest.json").then(function(sankeydata) {
       graph = sankey({ nodes, links });
@@ -42,7 +42,7 @@ function createSankeyDiagram(data, id) {
     var link = svg.append("g").selectAll(".link")
         .data(graph.links)
         .enter().append("path")
-        .attr("class", "link sankeyItem")
+        .attr("class", "link " + sankeyItem)
         .attr("d", d3.sankeyLinkHorizontal())
         .attr("stroke-width", function(d) { 
           sankeyWidthNormal = d.width;
@@ -131,39 +131,32 @@ function createSankeyDiagram(data, id) {
       node
         .append("text")
         .attr("x", function(d) {
-          return d.x0 + 15;
+          let mult = 0.85;
+          if (d.index < 5) {
+            return d.x0 - 80 * mult;
+          } else {
+            return d.x0 + 70 * mult;
+          }
         })
         .attr("y", function(d) {
-          return (d.y1 + d.y0) / 2;
+          plus = 0;
+          if (d.red_list_cat == 'CR') {
+            plus = 10;
+          } 
+          return ((d.y1 + d.y0) / 2) + plus;
         })
         .attr("dy", "0.35em")
         .text(function(d) {
-          return d.red_list_cat;
+          return d.red_list_cat + " - " + Math.round(d.percent) + "%";
+        })
+        .attr('fill', function(d) {
+          return getColor(d.red_list_cat);
         })
         .filter(function(d) {
-          return d.x0 +20;
+          return d.x0 + 20;
         })
         .attr("text-anchor", "start");
 
-              // the function for moving the nodes
-      function dragmove(d) {
-        d3.select(this)
-          .select("rect")
-          .attr("y", function(n) {
-            n.y0 = Math.max(0, Math.min(n.y0 + d.dy, height_sankey - (n.y1 - n.y0)));
-            n.y1 = n.y0 + n.rectHeight;
-            return n.y0;
-          });
-
-        d3.select(this)
-          .select("text")
-          .attr("y", function(n) {
-            return (n.y0 + n.y1) / 2;
-          });
-
-        sankey.update(graph);
-        link.attr("d", d3.sankeyLinkHorizontal());
-      }
     });
      
 }

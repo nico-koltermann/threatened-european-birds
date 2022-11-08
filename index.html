@@ -46,7 +46,7 @@
   <!-- Static Header -->
   <div class="headline d-flex justify-content-around align-items-center">
     <div class="headline-text">
-      <h1> Threatend European Birds</h1>
+      <h2> Threatend European Birds</h2>
     </div>
     <div class="d-flex justify-content-around">
       <div class="category-div lc-color">LC - Least Concern</div>
@@ -59,38 +59,38 @@
 
   <!-- ---------------------------------- -->
   <!-- Content - Charts -->
-  <div class="page-content d-flex flex-row justify-content-around mx-3">
+  <div class="page-content d-flex flex-row justify-content-between mx-3">
 
     <!-- Left Container -->
-    <div style="width: 62%" class="d-flex flex-column justify-content-between ml-5 mb-4">
+    <div style="width: 62%" class="d-flex flex-column justify-content-start ml-5 mb-4">
       
       <!-- TOP -->
-      <div style="height: 58%;" class="d-flex flex-row justify-content-between">
+      <div style="height: 50%;" class="d-flex flex-row justify-content-around">
         <!-- TOP: MAP -->
-        <div style="width: 55%; height: 100%;" class="chart-container mt-3 map-text">
-          <h1>Number of Threatened Birds per Country</h1>
-          <div id="map"></div>
-          <div class="d-flex">
+        <div style="width: 55%; height: 100%;" class="chart-container mt-3 map-text d-flex justify-content-center flex-column">
+          <h3>Number of Threatened Birds per Country</h3>
+          <div class="d-flex justify-content-center" id="map"></div>
+          <div class="d-flex justify-content-center" class="d-flex">
             <ul class="map-button unknown-bg-color" 
             >Unknown</ul>
             <ul class="map-button c125-bg-color" 
-            >From 1 to 5</ul>
+            >1 to 5</ul>
             <ul class="map-button c6210-bg-color" 
-            >From 6 to 10</ul>
+            >6 to 10</ul>
             <ul class="map-button c11215-bg-color" 
-            >From 11 to 15</ul>
+            >11 to 15</ul>
             <ul class="map-button c16220-bg-color" 
-            >From 16 to 20</ul>   
+            >16 to 20</ul>   
           </div>
         </div>
 
-        <div style="width: 40%; height: 100%" class="chart-container my-3 ml-5 d-flex justify-content-between align-items-center">
-          <svg id="scatterPlot"></svg>
-          <div style="width: 10%" class="d-flex flex-column">
+        <div style="width: 40%; height: 100%" class="chart-container my-3 ml-5 d-flex flex-column justify-content-between align-items-center">
+          <div><svg id="scatterPlot"></svg></div>
+          <div style="width: 10%" class="d-flex flex-row justify-content-center">
             <button id="btn-LC" class="btn btn-light button lc-bg-color" 
             onclick="redListCatButton('LC')" 
             onmouseover="onRedListButtonHover('LC')" 
-            onmouseleave="onRedListButtonLeave('LC')">
+            onmouseleave="  onRedListButtonLeave('LC')">
               LC</button>
             <button id="btn-NT" class="btn btn-light button nt-bg-color" 
             onclick="redListCatButton('NT')"
@@ -118,10 +118,10 @@
 
 
       <!-- BOTTOM -->
-      <div style="height: 40%" class="d-flex justify-content-between align-items-end">
-
+      <div style="height: 37%; padding: 1rem" class="mx-0 mt-5 pt-4 d-flex justify-content-between align-items-end">
         <!-- Sankey -->
-        <div style="width: 100%; height: 90%;" class="chart-container mb-5 d-flex justify-content-center  ">
+        <div style="width: 100%; height: 100%;" class="chart-container mb-5 d-flex justify-content-center flex-column align-items-center">
+          <h4>IUNC Red List Category Trend 2012 -> 2021</h4>
           <div id="sankey"></div>
         </div>
 
@@ -135,7 +135,8 @@
 
     <!-- Right Container -->
     <div style="height: 100%" class="d-flex flex-column justify-content-center my-3">
-      <div style="height: 100%" class="chart-container">
+      <div style="height: 100%" class="chart-container d-flex justify-content-center flex-column align-items-center">
+        <h3>Bird Families and Species</h3>
         <div id="dotMatrix"></div>
       </div>
     </div>

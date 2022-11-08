@@ -168,6 +168,10 @@ function winteringFilter(filter) {
         return d.keywintering == filterMatch[filter];
       })
       .style("fill", function(d){ return getColor(d.red_list_cat); });
+    d3.selectAll("." + sankeyItem)
+    .filter(function (d, i) {
+      return d.keywintering == filterMatch[filter];
+    })
   } else {
     ___filterStates___[filter] = true;
     d3.selectAll("." + scatterItem)
