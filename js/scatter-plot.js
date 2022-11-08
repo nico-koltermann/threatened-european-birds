@@ -42,7 +42,7 @@ function createScatterPlot(data, id) {
   // Add X axis label:
   svg.append("text")
     .attr("text-anchor", "end")
-    .attr("x", width_scatter)
+    .attr("x", width_scatter - 30)
     .attr("y", height_scatter + 70)
     .text("Surface Area");
 

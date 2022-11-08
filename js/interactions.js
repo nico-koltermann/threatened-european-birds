@@ -81,6 +81,11 @@ function redListCatButton(cat) {
         return d.red_list_cat.includes(cat);
       })
       .style("fill", function(d){ return getColor(d.red_list_cat); });
+    d3.selectAll("." + countryItem)
+      .filter(function (d, i) {
+        return d.country_count.includes(cat);
+      })
+      .style("fill", function(d){ return colorScaleHover(d.country_count); });
   } else {
     ___filterStates___[cat] = true;
     btn.style.background = grey;
@@ -93,7 +98,12 @@ function redListCatButton(cat) {
       .filter(function (d, i) {
         return d.red_list_cat.includes(cat);
       })
-      .style("fill", function(d){ return grey; }); 
+      .style("fill", function(d){ return grey; });
+     d3.selectAll("." + countryItem)
+      .filter(function (d, i) {
+        return d.country_count.includes(cat);
+      })
+      .style("fill", function(d){ return grey; });
   }
   createQuartileLines();
 }

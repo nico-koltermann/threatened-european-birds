@@ -15,13 +15,13 @@ function createMap(data, id) {
   pathGenerator = d3.geoPath().projection(europeProjection);
 
 	var colorScale = d3.scaleThreshold()
-		.domain([0, 1,  5, 10, 15])
-		.range(['#abb2b9', '#abb2b9', '#f4d03f', '#f5b041', '#e74c3c', '#7b241c']);
+		.domain([0, 1,  6, 11, 16])
+		.range(['#d1d4d8', '#d1d4d8', '#a2d7e3', '#7eaedf', '#0b3e94', '#062a4a']);
 
 	
 	var colorScaleHover = d3.scaleThreshold()
-		.domain([0, 1,  5, 10, 15])
-		.range(['#abb2b9', '#eaecee', '#f9e79f', '#f8c471', '#f1948a', '#922b21']);
+		.domain([0, 1,  6, 11, 16])
+		.range(['#e8eaeb', '#edeef0', '#cdeef5', '#aecff0', '#2459b2', '#184064']);
 
 	d3.json(geoJsonUrl).then(geojson => {
 		
@@ -57,7 +57,7 @@ function createMap(data, id) {
 				.data(geojson.features)
 				.enter()
 				.append("path")
-				.attr('class', 'country-path')
+				.attr("class", "countryItem" + countryItem)
 				.attr("d", pathGenerator) // This is where the magic happens
 				.attr("stroke", "grey") // Color of the lines themselves
 				.attr("fill", "white") // Color uses to fill in the lines
