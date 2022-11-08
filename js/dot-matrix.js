@@ -228,9 +228,15 @@ function createDotMatrix(input_data, id) {
           .attr( "d", d3.symbol().size(zoomSymbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
           .style('cursor', 'pointer');
 
-        tooltip
-          .style('top', (e.layerY + 10) + 'px')
-          .style('left', (e.layerX - 25) + 'px');
+        if (e.layerY > screen.height * 0.65) {
+          tooltip
+            .style('top', (e.layerY - 200) + 'px')
+            .style('left', (e.layerX - 90) + 'px');
+        } else {
+          tooltip
+            .style('top', (e.layerY + 20) + 'px')
+            .style('left', (e.layerX - 90) + 'px');
+        }
     })
     .on('mouseout', function(e, d) {
         handleMouseLeave(d);

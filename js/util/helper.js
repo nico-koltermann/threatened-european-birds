@@ -78,16 +78,15 @@ function getFilteredData(data) {
     } 
   });
 
-  // temp.forEach(species => {
-  //   if (!___filterStates___.Breeding && species.keywintering == 'N') {
-  //     arr.push(species);
-  //   } 
-  //   if (!___filterStates___.Wintering && species.keywintering == 'Y') {
-  //     arr.push(species);
-  //   } 
-  // });
+  temp.forEach(species => {
+    if (!___filterStates___.Breeding && species.keywintering == 'N') {
+      arr.push(species);
+    } 
+  });
 
-  return temp;
+  console.log(arr);
+
+  return arr;
 }
 
 function filterData() {

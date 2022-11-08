@@ -72,6 +72,8 @@ function createQuartileLines() {
 
   d3.dsv(";", dataPath).then(function(data) {
 
+    console.log("test");
+
     let populations = [];
     let filterData = getFilteredData(data);
 

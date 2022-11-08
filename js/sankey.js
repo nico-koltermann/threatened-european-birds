@@ -28,8 +28,7 @@ function createSankeyDiagram(data, id) {
     links = dataToNodesAndLinks(data);
     nodes = getNodes(data);
 
-    d3.json("data/sankeyTest.json").then(function(sankeydata) {
-      graph = sankey({ nodes, links });
+    graph = sankey({ nodes, links });
 
     // create gradients for the links
     
@@ -146,8 +145,6 @@ function createSankeyDiagram(data, id) {
           return d.x0 + 20;
         })
         .attr("text-anchor", "start");
-
-    });
      
 }
 

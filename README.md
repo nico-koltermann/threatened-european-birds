@@ -1,4 +1,4 @@
-# Information Visualization G   roup21
+# Information Visualization Group21
 
 Run server:
 
@@ -6,25 +6,10 @@ Run server:
 python3 -m http.server
 ```
 
-# Usefull: 
+## IMPORTANT
 
-## Plots 
+The whole programming progress was done on __Full-HD__ resolution. We were not able to test on other resolution and responsive programming was'nt the focus of the dashboard.
 
-https://d3-graph-gallery.com/
- 
-## API 
+__If your display resolution is more then Full-HD, please lower the ZOOM level in the browser to have the correct format:__
 
-https://github.com/d3/d3/blob/main/API.md
-
-
-## Changelogs
-
-https://observablehq.com/@d3/d3v6-migration-guide#events
-
-## Examples
-
-[Graph](http://bl.ocks.org/eesur/be2abfb3155a38be4de4)
-[Dot Matrix](https://arpitnarechania.github.io/d3-dotmatrix/)
-
-[Scatterplot](http://bl.ocks.org/williaster/af5b855651ffe29bdca1)
-[]()
+![](images/example.png)

@@ -109,7 +109,7 @@ function redListCatButton(cat) {
       .style("fill", function(d){ return getColor(d.red_list_cat); });
     d3.selectAll('.' + sankeyItem)
       .filter(function (d, i) {
-        return d.species.red_list_cat.includes(cat) && !WBFilter(d);
+        return d.species.red_list_cat.includes(cat) && !WBFilter(d.species);
       })
       .style('stroke', function(d) {
 
@@ -163,7 +163,7 @@ function redListCatButton(cat) {
       .style("fill", function(d){ return grey; });
     d3.selectAll('.' + sankeyItem)
       .filter(function (d, i) {
-        return d.species.red_list_cat.includes(cat) && !WBFilter(d);
+        return d.species.red_list_cat.includes(cat) && !WBFilter(d.species);
       })
       .style("stroke", function(d){ return grey; });
   }
@@ -246,7 +246,7 @@ function winteringFilter(filter) {
     })
     d3.selectAll('.' + sankeyItem)
     .filter(function (d, i) {
-      return d.species.keywintering == filterMatch[filter] && !___filterStates___[d.red_list_cat];
+      return d.species.keywintering == filterMatch[filter] && !___filterStates___[d.species.red_list_cat];
     })
     .style('stroke', function(d) {
 
@@ -294,7 +294,7 @@ function winteringFilter(filter) {
       .style("fill", function(d){ return grey; });
     d3.selectAll('.' + sankeyItem)
       .filter(function (d, i) {
-        return d.species.keywintering == filterMatch[filter] && !___filterStates___[d.red_list_cat];
+        return d.species.keywintering == filterMatch[filter] && !___filterStates___[d.species.red_list_cat];
       })
       .style("stroke", function(d){ return grey; });
   }
@@ -305,17 +305,17 @@ function winteringFilter(filter) {
   if (___filterStates___['CR']) catsFilter.push('CR');
 
   createMap(data, '#map', catsFilter, !___filterStates___['Wintering'], !___filterStates___['Breeding']);
+  
+  createQuartileLines();
 
 }
 
 function handleMapMouseOver(item) {
-  species = item.summary;
+  species = item.summary.map(x => x.speciescode);
   if (species != undefined) {
-    species.forEach(specie => {
-
       d3.selectAll("." + scatterItem)
       .filter(function (d, i) {
-        return d.speciescode == specie.speciescode;
+        return species.includes(d.speciescode);
       })
       .moveToFront()
       .style('stroke', 'black')
@@ -324,29 +324,22 @@ function handleMapMouseOver(item) {
     
       d3.selectAll("." + sankeyItem)
       .filter(function (d, i) {
-        return d.species.speciescode == specie.speciescode;
+        return species.includes(d.speciescode);
       })
       .style("stroke-width", sankeyWidthHighlight)
       .style("stroke-opacity", sankeyHighlight);
     
       d3.selectAll("." + dotMatrixItem)
         .filter(function (d, i) {
-          return d.speciescode == specie.speciescode;
+          return species.includes(d.speciescode);
         })
         .moveToFront()
         .style('stroke', 'black')
         .style('stroke-width', dotStrokeWidth)
         .attr( "d", d3.symbol().size(zoomSymbolSizeDotMatrix).type( function(d) { return getSymbol(d); }) )
-
-    });
   }
 }
 
 function handleMapMouseLeave(item) {
-  species = item.summary;
-  if (species != undefined) {
-    species.forEach(specie => {
-      handleMouseLeave(specie);
-    });
-  }
+  handleMouseLeave(item);
 }
