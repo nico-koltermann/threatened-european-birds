@@ -1,4 +1,4 @@
-function getGradID(d){return "linkGrad-" + d.source.name + d.target.name;}
+function getGradID(d){ return "linkGrad-" + d.source.name + d.target.name; }
 
 function createSankeyDiagram(data, id) {
 
