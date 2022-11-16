@@ -16,3 +16,13 @@
 .title{
 font-size:16px;
 }
+
+.legendEntryBreed:hover {
+	fill: darkgrey;
+	cursor: pointer;
+}
+
+.legendEntryWinter:hover {
+	fill: darkgrey;
+	cursor: pointer;
+}

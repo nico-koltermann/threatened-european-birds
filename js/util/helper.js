@@ -8,6 +8,15 @@ function getColor(red_list_cat) {
   }
 }
 
+function evalColor(species) {
+  if ( !species.showData ){
+    return getColor(species.red_list_cat);
+  }
+  else {
+    return "grey";
+  }
+}
+
 function getSymbol(d) {
   if (d.keywintering == 'N') {
     return d3.symbols[0]; 
@@ -22,6 +31,13 @@ function comparePop(a, b) {
   }
   // a must be equal to b
   return 1;
+}
+
+const red_list_rank = { CR: 1, EN: 2, VU: 3, NT: 4, LC: 5 }
+function compareRedList( left, right ) {
+  if (!red_list_rank[left.red_list_cat])  return -1;
+  if (!red_list_rank[right.red_list_cat]) return 1;
+  return red_list_rank[left.red_list_cat] - red_list_rank[right.red_list_cat];
 }
 
 const quantile = (arr, q) => {
@@ -62,14 +78,16 @@ function getFilteredData(data) {
     } 
   });
 
-  // temp.forEach(species => {
-  //   if (!___filterStates___.Breeding && species.keywintering == 'N') {
-  //     arr.push(species);
-  //   } 
-  //   if (!___filterStates___.Wintering && species.keywintering == 'Y') {
-  //     arr.push(species);
-  //   } 
-  // });
+  temp.forEach(species => {
+    if (!___filterStates___.Breeding && species.keywintering == 'N') {
+      arr.push(species);
+    } 
+  });
 
-  return temp;
+  console.log(arr);
+
+  return arr;
+}
+
+function filterData() {
 }

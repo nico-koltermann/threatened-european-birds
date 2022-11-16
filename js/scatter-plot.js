@@ -1,7 +1,3 @@
-const margin_scatter = { top: 30, right: 100, bottom: 80, left: 100 };
-const width_scatter = 600 - margin_scatter.left - margin_scatter.right;
-const height_scatter = 400 - margin_scatter.top - margin_scatter.bottom;
-
 function createScatterPlot(data, id) {
 
   const svg = d3
@@ -22,9 +18,9 @@ function createScatterPlot(data, id) {
     .attr("id", "gXAxis")
     .attr("transform", `translate(0, ${height_scatter + margin_scatter.top})`)
     .call(d3.axisBottom(x)
-      .ticks(6)
+      .ticks(4)
       .tickFormat((x) => x)
-    )
+    );
 
   const y = d3
       .scaleLog()
@@ -38,19 +34,19 @@ function createScatterPlot(data, id) {
   svg
     .append("g")
     .call(d3.axisLeft(y)
-      .ticks(5)
+      .ticks(4)
       .tickFormat((x) => x)
     )
     .attr("id", "gYAxis");
 
-// Add X axis label:
+  // Add X axis label:
   svg.append("text")
     .attr("text-anchor", "end")
-    .attr("x", width_scatter)
+    .attr("x", width_scatter - 30)
     .attr("y", height_scatter + 70)
     .text("Surface Area");
 
-      // Add X axis label:
+  // Add X axis label:
   svg.append("text")
   .attr("text-anchor", "end")
   .attr("x", 0)
@@ -61,7 +57,7 @@ function createScatterPlot(data, id) {
     .selectAll("circle")
     .data(data)
     .join("circle")
-    .attr("class", "circleValues itemValue")
+    .attr("class", "" + scatterItem)
     .attr("cx", (d) => x(d.distribution_surface_area))
     .attr("cy", (d) => y(d.population_maximum_size))
     .attr("r", scatterCircleSize)
@@ -75,6 +71,8 @@ function createScatterPlot(data, id) {
 function createQuartileLines() {
 
   d3.dsv(";", dataPath).then(function(data) {
+
+    console.log("test");
 
     let populations = [];
     let filterData = getFilteredData(data);
@@ -162,12 +160,4 @@ function createQuartileLines() {
   });
 
 }
-
-function updateScatterPlot(id, dataPath) {
-  
-
-  
-}
-
-
   

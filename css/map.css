@@ -1,4 +1,43 @@
+:root {
+  --c125: #cdeef5;
+  --c6210: #aecff0;
+  --c11215: #2459b2;
+  --c16220: #184064;
+  --Unknown: #d1d4d8;
+}
+
 path:hover {
 	fill: rgba(8, 81, 156, 0.2);
 	cursor: pointer;
+}
+
+.unknown-bg-color { background-color: var(--Unknown) }
+.c125-bg-color { background-color: var(--c125) }
+.c6210-bg-color { background-color: var(--c6210) }
+.c11215-bg-color { background-color: var(--c11215) }
+.c16220-bg-color { background-color: var(--c16220) }
+
+.map-button {
+  border-radius: 0.5rem;
+  border: 1px solid black;
+  margin: 0.25rem;
+  white-space: nowrap;
+	margin-right: 1rem;
+	display: flex;
+}
+
+.map-text {
+	margin-top: 0.25rem;
+  /* font-family: "Flaviotte"; */
+  color: black;
+}
+
+div ul {
+	text-align: center;
+	justify-content:center;
+	padding: .3rem 1.3rem;
+}
+
+.map-button:hover {
+  cursor: unset;
 }

@@ -14,22 +14,28 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/dot-matrix.css">
   <link rel="stylesheet" href="css/map.css" />
+  <link rel="stylesheet" href="css/sankey.css" />
 
   <!-- D3 -->
-  <script type="text/javascript" src = "library/d3.v6.min.js"></script> 
+  <script type="text/javascript" src = "library/d3.v7.min.js"></script> 
+  <script type="text/javascript" src = "library/d3-sankey.min.js"></script> 
   
   <!-- D3 Topo -->
   <script src="library/topojson.v1.min.js"></script>
+  <script src="https://unpkg.com/topojson@3"></script> 
+  
 
   <!-- Utils -->
   <script type="text/javascript" src="js/util/config.js"></script>
   <script type="text/javascript" src="js/util/helper.js"></script>
+  <script type="text/javascript" src="js/util/data-helper.js"></script>
   <script type="text/javascript" src="js/interactions.js"></script>
 
   <!-- Plot scripts-->
   <script type="text/javascript" src="js/scatter-plot.js"></script>
   <script type="text/javascript" src="js/dot-matrix.js"></script>
-  <!-- <script type="text/javascript" src="js/map.js"></script> -->
+  <script type="text/javascript" src="js/map.js"></script>
+  <script type="text/javascript" src="js/sankey.js"></script>
   <script type="text/javascript" src="js/script.js"></script>
   
 </head>
@@ -39,7 +45,7 @@
   <!-- Static Header -->
   <div class="headline d-flex justify-content-around align-items-center">
     <div class="headline-text">
-      <h1>European Birds</h1>
+      <h2> Threatend European Birds</h2>
     </div>
     <div class="d-flex justify-content-around">
       <div class="category-div lc-color">LC - Least Concern</div>
@@ -52,52 +58,86 @@
 
   <!-- ---------------------------------- -->
   <!-- Content - Charts -->
-  <div class="page-content d-flex flex-row justify-content-around">
+  <div class="page-content d-flex flex-row justify-content-between mx-3">
 
     <!-- Left Container -->
-    <div style="width: 55%" class="d-flex flex-column justify-content-center mb-4">
+    <div style="width: 62%" class="d-flex flex-column justify-content-start ml-5 mb-4">
+      
+      <!-- TOP -->
+      <div style="height: 50%;" class="d-flex flex-row justify-content-around">
+        <!-- TOP: MAP -->
+        <div style="width: 55%; height: 100%;" class="chart-container mt-3 map-text d-flex justify-content-center flex-column">
+          <h3>Number of Threatened Birds per Country</h3>
+          <div class="d-flex justify-content-center" id="map"></div>
+          <div class="d-flex justify-content-center" class="d-flex">
+            <ul class="map-button unknown-bg-color" 
+            >Unknown</ul>
+            <ul class="map-button c125-bg-color" 
+            >1 to 5</ul>
+            <ul class="map-button c6210-bg-color" 
+            >6 to 10</ul>
+            <ul class="map-button c11215-bg-color" 
+            >11 to 15</ul>
+            <ul class="map-button c16220-bg-color" 
+            >16 to 20</ul>   
+          </div>
+        </div>
 
-      <!-- TOP: MAP -->
-      <div style="width: 100%" class="chart-container my-5">
-        <svg id="mapEurope"></svg>
-        <img height="350px" src="images/map_mockup.png" />
+        <div style="width: 40%; height: 100%" class="chart-container my-3 ml-5 d-flex flex-column justify-content-between align-items-center">
+          <div><svg id="scatterPlot"></svg></div>
+          <div style="width: 10%" class="d-flex flex-row justify-content-center">
+            <button id="btn-LC" class="btn btn-light button lc-bg-color" 
+            onclick="redListCatButton('LC')" 
+            onmouseover="onRedListButtonHover('LC')" 
+            onmouseleave="  onRedListButtonLeave('LC')">
+              LC</button>
+            <button id="btn-NT" class="btn btn-light button nt-bg-color" 
+            onclick="redListCatButton('NT')"
+            onmouseover="onRedListButtonHover('NT')" 
+            onmouseleave="onRedListButtonLeave('NT')">
+              NT</button>
+            <button id="btn-VU" class="btn btn-light button vu-bg-color" 
+            onclick="redListCatButton('VU')"
+            onmouseover="onRedListButtonHover('VU')" 
+            onmouseleave="onRedListButtonLeave('VU')">
+              VU</button>
+            <button id="btn-EN" class="btn btn-light button en-bg-color" 
+            onclick="redListCatButton('EN')"
+            onmouseover="onRedListButtonHover('EN')" 
+            onmouseleave="onRedListButtonLeave('EN')">
+              EN</button>
+            <button id="btn-CR" class="btn btn-light button cr-bg-color" 
+            onclick="redListCatButton('CR')"
+            onmouseover="onRedListButtonHover('CR')" 
+            onmouseleave="onRedListButtonLeave('CR')">
+              CR</button>   
+            </div>
+          </div>
       </div>
 
-      <!-- BOTTOM -->
-      <div class="d-flex justify-content-between">
 
-        <!-- RED LIST PLOT -->
-        <div style="width: 40%; height: fit-content;" class="chart-container my-5">
-          <svg id="red_list_plot"></svg>
-          <img style="width: 100%; height: 100%" src="images/red_list_mockup.png" />
+      <!-- BOTTOM -->
+      <div style="height: 37%; padding: 1rem" class="mx-0 mt-5 pt-4 d-flex justify-content-between align-items-end">
+        <!-- Sankey -->
+        <div style="width: 100%; height: 100%;" class="chart-container mb-5 d-flex justify-content-center flex-column align-items-center">
+          <h4>IUCN Red List Category Trend 2012 -> 2020</h4>
+          <div id="sankey"></div>
         </div>
 
         <!-- SCATTERPLOT -->
-        <div style="width: 50%" class="chart-container my-5 ml-5 d-flex justify-content-between">
-          <svg id="scatterPlot"></svg>
-          <div style="width: 10%" class="d-flex flex-column">
-            <button id="btn-LC" class="btn btn-light button lc-bg-color" onclick="redListCatButton('LC')">
-              LC</button>
-            <button id="btn-NT" class="btn btn-light button nt-bg-color" onclick="redListCatButton('NT')">
-              NT</button>
-            <button id="btn-VU" class="btn btn-light button vu-bg-color" onclick="redListCatButton('VU')">
-              VU</button>
-            <button id="btn-EN" class="btn btn-light button en-bg-color" onclick="redListCatButton('EN')">
-              EN</button>
-            <button id="btn-CR" class="btn btn-light button cr-bg-color" onclick="redListCatButton('CR')">
-              CR</button>   
-          </div>
 
-        <!-- END Bottom Container -->
-        </div>
-    <!-- END -  left container -->
-    </div>
-
+    <!-- END Bottom Container -->
+  </div>
+  
+  <!-- END -  left container -->
     </div>  
 
     <!-- Right Container -->
-    <div class="chart-container my-5">
-      <div id="dotMatrix"></div>
+    <div style="height: 100%" class="d-flex flex-column justify-content-center my-3">
+      <div style="height: 100%" class="chart-container d-flex justify-content-center flex-column align-items-center">
+        <h3>Bird Families and Species</h3>
+        <div id="dotMatrix"></div>
+      </div>
     </div>
 
   <!-- ---------------------------------- -->
